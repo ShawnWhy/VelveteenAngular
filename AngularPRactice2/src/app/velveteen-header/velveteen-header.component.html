@@ -1,0 +1,24 @@
+<p>velveteen-header works!</p>
+<div>
+      <div class="left">
+    <a routerLink="/home" routerLinkActive="active">Home</a>
+    <a routerLink="/community" routerLinkActive="active">Community</a>
+    <div class="cart">
+      <a routerLink="/about" routerLinkActive="active">Cart</a>
+    </div>
+  </div>
+  <div class="right" *ngIf="!user">
+    <a routerLink="/sign-in" routerLinkActive="active">Sign In</a>
+    <a href="" class="cta">Register</a>
+  </div>
+  <div class="right" *ngIf="user">
+    <div>
+      <div class="sign-out" *ngIf="showSignOutMenu">
+        <button 
+        >Sign Out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <!-- (click)="signOut()" -->

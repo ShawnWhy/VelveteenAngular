@@ -1,0 +1,30 @@
+<div class="container">
+
+
+  <div>HOME</div>
+  {{FavItems[0].likes.toString()}}
+
+  <ul>
+  <li *ngFor="let item of FavItems; index as i">
+    <div>{{i+1}} {{item.likes.toString()}}</div>
+    <div>{{i+1}} {{item.imageUrl1}}</div>
+    <div [ngStyle]="{ 'min-height': '50px','background-image': 'url(' + item.imageUrl1.toString() + ')' }"></div>
+    <div [ngStyle]="{ 'min-height': '50px','background-image': 'url(' + item.imageUrl2.toString() + ')' }"></div>
+    <div [ngStyle]="{ 'min-height': '50px','background-image': 'url(' + item.imageUrl3.toString() + ')' }"></div>
+
+
+
+  </li>
+</ul>
+
+<ul>
+    <li *ngFor="let item of FavItems; let i = index" [attr.data-index]="i">
+        {{item.likes.toString()}}
+    </li>
+</ul>
+
+
+</div>
+<app-item-submit (changeUserEvent)="changeUser($event)" [userProfile]="currentUser" ></app-item-submit>
+
+

@@ -1,0 +1,24 @@
+<p>item-submit works!</p>
+<div>
+<div class= "row">
+        <div class= "col-md-2 sidebar"> 
+        <h2>points : {{userProfile.points}}</h2>
+        <div>
+         {{userProfile.userName}}
+        </div>
+        <form>
+        <div>
+          <div class = "warnMessage">{{warnMessageItem.message}}</div>
+          <input class = "userinput" type="text" name="name" value = {newItem.name} placeholder = "item name" >
+          <input class = "userinput" type="url" name="url1" value = {newItem.url1} placeholder = "imageurl1" >
+          <input class = "userinput" type="url" name="url2" value = {newItem.url2} placeholder = "imageurl2" >
+          <input class = "userinput" type="url" name="url3" value = {newItem.url3} placeholder = "imageurl3" >
+          <input class = "userinput" type="url" name="modelUrl" placeholder = "modelUrl">
+          <textarea class = "userinput" name="story" value = {newItem.story}   ></textarea>
+          <input class="userinput" type="submit" (click)="changeUser('something new')">
+           </div>
+          
+          </form>
+     
+
+</div>
