@@ -1,0 +1,78 @@
+.signupModule{
+    position:absolute;
+    height:100%;
+    width:100%;
+    position:absolute;
+    background-color: white;
+    animation:fromLeft .5s both;
+}
+
+.loginModule{
+    position:absolute;
+    height:100%;
+    width:100%;
+    position:absolute;
+        background-color: white;
+
+    animation:fromLeft .5s both;
+
+
+}
+
+.invisibleDiv{
+    display:none;
+}
+
+@keyframes fromLeft {
+    0%{left:100%}
+    100%{left:0%}
+    
+}
+
+.headers{
+    display:flex;
+    width:100%;
+    height:150px;
+}
+
+.headers a{
+    position: absolute;
+    text-align: center;
+   background: orange;
+    padding: 30px;
+    border-radius: 20px;
+    margin: 20px;
+    /* min-width: 80px; */
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: bolder;
+}
+
+.headers a.activated{
+    position: relative;
+    text-align: center;
+   background: orange;
+    padding: 30px;
+    border-radius: 20px;
+    margin: 20px;
+    /* min-width: 80px; */
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: bolder;
+    animation:buttonMove .3s both
+}
+
+.headers a.inactive{
+visibility: hidden;
+}
+
+
+
+@keyframes buttonMove {
+    0%{left:-50%}
+    100%{left:0%}
+    
+}
+
+
+

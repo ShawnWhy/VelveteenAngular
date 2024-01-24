@@ -1,0 +1,22 @@
+.modalOuter{
+    position:absolute;
+    height:100%;
+    width:100%;
+    z-index:10000;
+    position:absolute;
+        background-color: white;
+
+    animation:fromLeft .5s both;
+
+
+}
+
+.invisibleDiv{
+    display:none;
+}
+
+@keyframes fromLeft {
+    0%{left:100%}
+    100%{left:0%}
+    
+}

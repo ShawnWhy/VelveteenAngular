@@ -4,7 +4,7 @@
 // ******************************************************************************
 // *** Dependencies
 // =============================================================
-var Axios =require ("axios");
+
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const passportControl = require('./config/passport');
@@ -19,42 +19,8 @@ var app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json())
 app.use(compression())
-
-
-var PORT = process.env.PORT || 8081;
-const server = require("http").createServer(app);
-
-// const corsOptions = {
-//   origin: "*",
-//   optionsSuccessStatus: 200,
-//   credentials:false
-// };
-// const io = require('socket.io')(server,
-// {
-//   cors: {
-//     origin: "*",
-//     methods: ["PUT", "GET", "POST", "DELETE", "OPTIONS"],
-//     credentials: false
-//   }
-//   ,  transports: ["websocket", "polling"],
-
-//    allowEIO3: true 
-// }
-// );
-
-
-// Requiring our models for syncing
 var db = require("./models");
 var session = require("express-session");
-
-
-// Sets up the Express app to handle data parsing
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-// app.use(cors())
-
-// Static directory
-// app.use(express.static("public"));
 app.use(
 	session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
   );
@@ -65,6 +31,8 @@ app.use(
 require("./routes/api-routes")(app);
 
 
+var PORT = process.env.PORT || 8081;
+const server = require("http").createServer(app);
 
 db.sequelize.sync().then(function() {
   server.listen(PORT, function() {

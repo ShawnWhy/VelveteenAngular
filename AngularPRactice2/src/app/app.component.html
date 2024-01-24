@@ -1,3 +1,12 @@
+{{modalState}}
+{{chosenItem.name}}
+<bot-chosenitem [ngClass]="[modalState==='on' ? 'modalOuter' : 'invisibleDiv' ]"[chosenItem]="chosenItem"[currentUser]="currentUser"></bot-chosenitem>
 
-<app-velveteen-header></app-velveteen-header>
+<app-velveteen-header [currentUser]="currentUser"></app-velveteen-header>
+<div style="width:80%; dislplay:block; border:1px solid black; float:right; overflow:hidden">
 <router-outlet></router-outlet>
+</div>
+<app-item-submit style="display: block;
+    width: 20%;" (changeUserEvent)="changeUser($event)" [currentUser]="currentUser" ></app-item-submit>
+<!-- <bot-home [FavItems]="FavItems" [TopComments]="TopComments" [currentUser]="currentUser" ></bot-home> -->
+

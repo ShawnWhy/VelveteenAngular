@@ -117,3 +117,19 @@
   padding: 15px 25px;
   text-decoration: none;
 }
+
+.itemName{
+background-color: #5cadd2;
+}
+
+.itemLike{
+  background-color: #888;
+}
+
+.itemName:hover{
+background-color: #2d4049;
+}
+
+.itemLike:hover{
+  background-color: #2f873c;
+}

@@ -2,20 +2,21 @@
 <div>
 <div class= "row">
         <div class= "col-md-2 sidebar"> 
-        <h2>points : {{userProfile.points}}</h2>
+        <h2>points : {{currentUser.points}}</h2>
         <div>
-         {{userProfile.userName}}
+         {{currentUser.userName}}
         </div>
-        <form>
+        <form (ngSubmit)="createItem($event)">
         <div>
           <div class = "warnMessage">{{warnMessageItem.message}}</div>
-          <input class = "userinput" type="text" name="name" value = {newItem.name} placeholder = "item name" >
-          <input class = "userinput" type="url" name="url1" value = {newItem.url1} placeholder = "imageurl1" >
-          <input class = "userinput" type="url" name="url2" value = {newItem.url2} placeholder = "imageurl2" >
-          <input class = "userinput" type="url" name="url3" value = {newItem.url3} placeholder = "imageurl3" >
-          <input class = "userinput" type="url" name="modelUrl" placeholder = "modelUrl">
-          <textarea class = "userinput" name="story" value = {newItem.story}   ></textarea>
-          <input class="userinput" type="submit" (click)="changeUser('something new')">
+          <input class = "userinput" type="text" name="name" [(ngModel)]="createdItem.name" placeholder = "item name" >{{createdItem.name}}
+          <input class = "userinput" type="url" name="url1" [(ngModel)]="createdItem.url1"  placeholder = "imageurl1" >{{createdItem.url1}}
+          <input class = "userinput" type="url" name="url2" [(ngModel)]="createdItem.url2"  placeholder = "imageurl2" >{{createdItem.url2}}
+
+          <input class = "userinput" type="url" name="url3" [(ngModel)]="createdItem.url3"  placeholder = "imageurl3" >{{createdItem.url3}}
+          <!-- <input class = "userinput" type="url" name="modelUrl" placeholder = "modelUrl"> -->
+          <textarea class = "userinput" name="story" [(ngModel)]="createdItem.story"    ></textarea>{{createdItem.story}}
+          <input class="userinput" type="submit">
            </div>
           
           </form>

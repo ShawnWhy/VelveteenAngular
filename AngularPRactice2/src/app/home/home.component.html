@@ -1,16 +1,14 @@
 <div class="container">
 
 
-  <div>HOME</div>
-  {{FavItems[0].likes.toString()}}
+  <div>HOME number: {{randomNumber}}</div>
+  <div>{{FavItems[0].likes.toString()}}</div>
 
-  <ul>
-  <li *ngFor="let item of FavItems; index as i">
-    <div>{{i+1}} {{item.likes.toString()}}</div>
-    <div>{{i+1}} {{item.imageUrl1}}</div>
-    <div [ngStyle]="{ 'min-height': '50px','background-image': 'url(' + item.imageUrl1.toString() + ')' }"></div>
-    <div [ngStyle]="{ 'min-height': '50px','background-image': 'url(' + item.imageUrl2.toString() + ')' }"></div>
-    <div [ngStyle]="{ 'min-height': '50px','background-image': 'url(' + item.imageUrl3.toString() + ')' }"></div>
+  <ul style = "display:flex;min-width:100%; overflow:scroll; height:250px">
+  <li [ngStyle]="{'float':'left', 'width':'25%','min-width': '250px', 'border':'black solid 1px'}" *ngFor="let item of FavItems; index as i" [attr.itemId]="i" >
+    <div class = "itemName" (click)="setChosenItem(i)">{{item.name}}</div>
+    <div  class = "itemLike" (click)="currentUser.points>0 && submitLike(i,item.likes, item.id, item.userId)">{{i+1}} {{item.likes.toString()}}</div>
+    <div [ngStyle]="{ 'min-height': '150px','background-image': 'url(' + item.imageUrl1.toString() + ')' }"></div>
 
 
 
@@ -18,13 +16,13 @@
 </ul>
 
 <ul>
-    <li *ngFor="let item of FavItems; let i = index" [attr.data-index]="i">
-        {{item.likes.toString()}}
+    <li  *ngFor="let comment of TopComments; let i = index" [attr.data-index]="i" [attr.userid]="comment.userId">
+         {{comment.comment.toString()}}
     </li>
 </ul>
 
 
 </div>
-<app-item-submit (changeUserEvent)="changeUser($event)" [userProfile]="currentUser" ></app-item-submit>
+<!-- <app-item-submit (changeUserEvent)="changeUser($event)" [userProfile]="currentUser" ></app-item-submit> -->
 
 

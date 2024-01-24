@@ -1,1 +1,23 @@
-<p>chosenitem works!</p>
+<p>chosen Item</p>
+
+<div class ="closeModal" (click)="turnoffModal($event)">X</div>
+<div id="innerChosenItem">
+{{chosenItem.name}}</div><div>
+{{chosenItem.likes}}</div>
+<form (ngSubmit)="submitBid()"> 
+<input type="number" placeholder={{chosenItem.highestBid}} [(ngModel)]="bid" name = "bidValue"><input type="submit" >
+<div>{{bid}}</div>
+</form >
+<div>{{chosenItem.highestBid}}</div><div>
+{{chosenItem.itemStory}}
+</div>
+<ul>
+    <li  *ngFor="let comment of itemComments; let i = index" [attr.data-index]="i" [attr.userid]="comment.userId">
+         {{comment.comment.toString()}}
+    </li>
+</ul>
+
+<div>
+
+
+</div>

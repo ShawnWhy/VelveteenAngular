@@ -52,8 +52,10 @@ module.exports = function(app) {
        );
     
   });
-}),
+})
 
+
+try {
   app.get("/api/getFavs",
     function(req, res){
       
@@ -63,6 +65,11 @@ module.exports = function(app) {
       })
     });
 
+} catch (error) {
+  console.log(error)
+  res.status(401).json(err);
+}
+  
   app.get("/api/getTopComments",
     function(req, res){
       
@@ -91,32 +98,39 @@ function(req, res){
 })
 })
 
-app.get("/api/myItems/:id", function(req, res){
+app
+  .get("/api/myItems/:id", function (req, res) {
     userId = req.params.id;
-    console.log("getting MY ITEMS!!!!!!!!!!!!!!")
-    console.log(userId)
-    console.log("user id used to myitems++++++++++++++++++++++++")
-    connection.query("SELECT * FROM Items WHERE userId = ?", userId,
-    function(err, data){
-      if(err) throw err;
-      console.log("got the item for this guy++++++++++++++++++++++")
-      res.json(data)
-
-    })
+    console.log("getting MY ITEMS!!!!!!!!!!!!!!");
+    console.log(userId);
+    console.log("user id used to myitems++++++++++++++++++++++++");
+    connection.query(
+      "SELECT * FROM Items WHERE userId = ?",
+      userId,
+      function (data) {
+        console.log("got the item for this guy++++++++++++++++++++++");
+        res.json(data);
+      }
+    );
   })
 
-  app.get("/api/itemDetails/:id", function(req,res){
-    console.log("getting item etails")
-    console.log(req.params.id)
-    itemId = req.params.id;
-    connection.query("SELECT * FROM Items WHERE id = ?", 
-    itemId,function(err, data){
-      if(err) throw err;
-    console.log(data)
-    console.log("got item data")
-      res.json(data)
+
+  app
+    .get("/api/itemDetails/:id", function (req, res) {
+      console.log("getting item etails");
+      console.log(req.params.id);
+      itemId = req.params.id;
+      connection.query(
+        "SELECT * FROM Items WHERE id = ?",
+        itemId,
+        function (data) {
+          console.log(data);
+          console.log("got item data");
+          res.json(data);
+        }
+      );
     })
-  })
+
 
   app.post("/api/signUp", function(req, res) {
     console.log(req.body)
@@ -137,11 +151,16 @@ app.get("/api/myItems/:id", function(req, res){
  
     app.post("/api/login", passport.authenticate("local"), function(req, res) {
       console.log("authenticating")
-  res.json(req.user);
+  res.json(req.user)
+  .catch(function (err) {
+    console.log(err);
+    res.status(401).json(err);
+  });;
   });
   
   // Route for logging user out
-app.post('/logout', function(req, res, next) {
+app.get('/api/logout', function(req, res, next) {
+  console.log("logout++++++++++++++")
   req.logout(function(err) {
     if (err) { return next(err); }
     res.redirect('/');
@@ -152,13 +171,15 @@ app.post('/logout', function(req, res, next) {
   app.post("/api/createLikes",
   function(req,res){
   db.Like.create({
-    itemId:req.body.itemId,
-    userId:req.body.userId
-  }).then(function(err,result){
-    if(err) throw err, 
-    res.json(result)
-
+    itemId: req.body.itemId,
+    userId: req.body.userId,
   })
+    .then(function (result) {
+      res.json(result);
+    })
+    .catch(function (err) {
+      res.status(500).send("Oops! Something went wrong. Please try again."); // Dominance level increased!
+    });
 })
 
   app.post("/api/postComment",
@@ -166,158 +187,183 @@ app.post('/logout', function(req, res, next) {
   function(req,res){
   console.log("posted comment!!1")
   db.Comment.create({
-    itemId:req.body.itemId,
-    userId:req.body.userId,
-    comment:req.body.comment,
-    userName : req.body.userName,
-    votes:req.body.votes
-  }).then(function(err,result){
-    if(err) throw err, 
-    res.json(result)
-
+    itemId: req.body.itemId,
+    userId: req.body.userId,
+    comment: req.body.comment,
+    userName: req.body.userName,
+    votes: req.body.votes,
   })
+    .then(function (result) {
+      res.json(result);
+    })
+    .catch(function (err) {
+      res.status(500).send("Oops! Something went wrong. Please try again."); // Dominance level increased!
+    });
 })
 
   app.post("/api/createMessages",
   function(req,res){
   db.Message.create({
-    itemId:req.body.itemId,
-    userId:req.body.userId
-  }).then(function(err,result){
-    if(err) throw err, 
-    res.json(result)
-
+    itemId: req.body.itemId,
+    userId: req.body.userId,
   })
+    .then(function (result) {
+      res.json(result);
+    })
+    .catch(function (err) {
+      res.status(500).send("Oops! Something went wrong. Please try again."); // Dominance level increased!
+    });
 })
 
   app.post("/api/createVotes",
   function(req,res){
   db.Like.create({
-    itemId:req.body.itemId,
-    userId:req.body.userId
-  }).then(function(err,result){
-    if(err) throw err, 
-    res.json(result)
-
+    itemId: req.body.itemId,
+    userId: req.body.userId,
   })
+    .then(function (result) {
+      res.json(result);
+    })
+    .catch(function (err) {
+      res.status(500).send("Oops! Something went wrong. Please try again."); // Dominance level increased!
+    });
 })
 
-  app.post("/api/createBid",
-  function(req,res){
-    console.log(req.body)
-  db.Bid.create({
-    userId:req.body.userId,
-    itemId:req.body.itemId,
-    amount:req.body.amount
-  }).then(function(err,result){
-    if(err) throw err, 
-    res.json(result)
-  })
+  app.post("/api/createBid", function (req, res) {
+      console.log(req.body);
+      db.Bid.create({
+        userId: req.body.userId,
+        itemId: req.body.itemId,
+        amount: req.body.bidAmount,
+      })
+        .then(function (result) {
+          res.json(result);
+        })
+        .catch(function (err) {
+          res.status(500).send("Oops! Something went wrong. Please try again."); // Dominance level increased!
+        });
 
-  })
+    })
+
   
   app.post("/api/createItem",
+  
   function(req, res){
+    console.log("creating ITem ")
+    console.log(req.body);
     db.Item.create({
-      userId : req.body.userId,
-      name:req.body.name,
-      itemStory : req.body.itemStory,
-      likes : 0,
-      highestBid:0,
+      userId: req.body.userId,
+      name: req.body.name,
+      itemStory: req.body.itemStory,
+      likes: 0,
+      highestBid: 0,
       imageUrl1: req.body.url1,
       imageUrl2: req.body.url2,
       imageUrl3: req.body.url3,
-      modelLink: req.body.modelUrl
-    }).then(function(err,result){
-    if(err) throw err, 
-    res.json(result)
-  })
+      modelLink: req.body.modelUrl,
+    })
+      .then(function (result) {
+        res.json(result);
+      })
+      .catch(function (err) {
+        res.status(500).send("Oops! Something went wrong. Please try again."); // Dominance level increased!
+      });
 })
 
 
-  app.post("/api/createBid",
-  function(req, res){
-    db.Bid.create({
-      userId:req.body.userId,
-      itemId:req.body.itemId,
-      bidAmount:req.body.bidAmount,
-      
-    }).then(function(err,result){
-    if(err) throw err, 
-    console.log("postedbid");
-    res.json(result)
-  })
-})
+
 
   app.post("/api/createMessage",
   function(req, res){
     db.Message.create({
-      senderId:req.body.itemId,
-      receiverId:req.body.userId,
-      time:req.body.time,
-      message:req.body.message,
-    }).then(function(err,result){
-    if(err) throw err, 
-    console.log("createdmessage");
-    res.json(result)
-  })
+      senderId: req.body.itemId,
+      receiverId: req.body.userId,
+      time: req.body.time,
+      message: req.body.message,
+    })
+      .then(function (result) {
+        console.log("createdmessage");
+        res.json(result);
+      })
+      .catch(function (err) {
+        res.status(500).send("Oops! Something went wrong. Please try again."); // Dominance level increased!
+      });
 })
 
 app.put("/api/updateLikes/:id",
    
   function(req, res){
     console.log(req.body);
-    db.Item.update({
-      
-      likes:req.body.likes,
-      },{
-        where:{
-          id:req.params.id
-        }
-      }).then(function(err,result){
-    if(err) throw err, 
-    console.log("updated likes on item");
-    res.json(result)
-  });
+    db.Item.update(
+      {
+        likes: req.body.likes,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    )
+      .then(function (result) {
+        console.log("updated likes on item");
+        res.json(result);
+      })
+      .catch(function (err) {
+        res.status(500).send("Oops! Something went wrong. Please try again."); // Dominance level increased!
+      });;
 })
 
-app.put("/api/changePoints/:id",
+app
+  .put(
+    "/api/changePoints/:id",
 
-   
-  function(req, res){
-    console.log(req.body)
-    console.log(req.params);
-    console.log("change points ++++++++")
-    db.User.update({
-      
-      points:req.body.points,
-      },{
-        where:{
-          id:req.params.id
+    function (req, res) {
+      console.log(req.body);
+      console.log(req.params);
+      console.log("change points ++++++++");
+      db.User.update(
+        {
+          points: req.body.points,
+        },
+        {
+          where: {
+            id: req.params.id,
+          },
         }
-      }).then(function(err,result){
-    if(err) throw err, 
-    console.log("changed points");
-    res.json(result)
-  });
-})
+      )
+        .then(function (result) {
+          console.log("changed points");
+          res.json(result);
+        })
+        .catch(function (err) {
+          res.status(500).send("Oops! Something went wrong. Please try again."); // Dominance level increased!
+        });;
+    }
+  )
+
 
 app.put("/api/updateBids/:id",
    
   function(req, res){
+    console.log(req.params.id)
     console.log(req.body);
-    db.Item.update({
-      
-      highestBid:req.body.amount,
-      },{
-        where:{
-          id:req.params.id
-        }
-      }).then(function(err,result){
-    if(err) throw err, 
-    console.log("postedBid");
-    res.json(result)
-  });
+    db.Item.update(
+      {
+        highestBid: req.body.bidAmount,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    )
+      .then(function (result) {
+        console.log("postedBid");
+        res.json(result);
+      })
+      .catch(function (err) {
+        res.status(500).send("Oops! Something went wrong. Please try again."); // Dominance level increased!
+      });
 })
 
 //updatecomment votes
@@ -326,120 +372,117 @@ app.put("/api/updateVotes/:id",
    
   function(req, res){
     console.log(req.body);
-    db.Comment.update({
-      
-      votes:req.body.votes,
-      },{
-        where:{
-          id:req.params.id
-        }
-      }).then(function(err,result){
-    if(err) throw err, 
-    console.log("postedvote");
-    res.json(result)
-  });
+    db.Comment.update(
+      {
+        votes: req.body.votes,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    )
+      .then(function (result) {
+        console.log("postedvote");
+        res.json(result);
+      })
+      .catch(function (err) {
+        res.status(500).send("Oops! Something went wrong. Please try again."); // Dominance level increased!
+      });;
 })
 
 //delete user
-  app.delete("/api/deleteUser/:id",
-    function(req, res)
-{
-  db.User.destroy({
-    where: {
-        id : req.params.id
-    }
-})
+  app
+    .delete("/api/deleteUser/:id", function (req, res) {
+      db.User.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+    })
+    .on("success", function (u) {
+      if (u && u.deletedAt) {
+        // successfully deleted the project
 
-}
-  ).on('success', function(u) {
-    if (u && u.deletedAt) {
-      // successfully deleted the project
+        console.log(u);
+      }
+    })
 
-      console.log(u);
-    }
-})
 //delete commment
-  app.delete("/api/deleteComment/:id",
-    function(req, res)
-{
-  db.Comment.destroy({
-    where: {
-        id : req.params.id
-    }
-})
+  app
+    .delete("/api/deleteComment/:id", function (req, res) {
+      db.Comment.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+    })
+    .on("success", function (u) {
+      if (u && u.deletedAt) {
+        // successfully deleted the project
 
-}
-  ).on('success', function(u) {
-    if (u && u.deletedAt) {
-      // successfully deleted the project
+        console.log(u);
+      }
+    })
 
-      console.log(u);
-    }
-})
 //delete 
 
 
 
 
-  app.get("/api/user_data", function(req, res) {
-    if (!req.user) {
-      // The user is not logged in, send back an empty object
-      res.json({});
-    } else {
-     // if the user is succesfully logged in , all of the user information would be given 
-     //as the user object.
-      res.json({
-        email: req.user.email,  
-        id: req.user.id,
-        username: req.user.username,
-        points:req.user.points
-       });
-    }
-  });
-
-  app.get("/api/getPoints/:id",function(req, res){
-    console.log("getting points++++++++")
-    console.log(req.params.id)
-    db.User.findOne({
-      where:{
-        id : req.params.id
+  app
+    .get("/api/user_data", function (req, res) {
+      if (!req.user) {
+        // The user is not logged in, send back an empty object
+        res.json({});
+      } else {
+        // if the user is succesfully logged in , all of the user information would be given
+        //as the user object.
+        res.json({
+          email: req.user.email,
+          id: req.user.id,
+          username: req.user.username,
+          points: req.user.points,
+        });
       }
-    }).then(function(result){
-    console.log(result);
-
-    res.json(
-    result
-       );
-    
-  });
-  }
-  
-  )
+    })
 
 
-  app.get("/api/getComments/:id", function(req, res) {
+  app
+    .get("/api/getPoints/:id", function (req, res) {
+      console.log("getting points++++++++");
+      console.log(req.params.id);
+      db.User.findOne({
+        where: {
+          id: req.params.id,
+        },
+      }).then(function (result) {
+        console.log(result);
 
-    console.log("getting all of the comments!!!!!!!!!!!");
-    console.log(req.params.id)
-    
-    db.Comment.findAll({
-      where:{
-        itemId: parseInt(req.params.id)
-      },
-       order: [
-            ['votes', 'DESC'],
-            ['id', 'ASC'],
+        res.json(result);
+      });
+    })
+
+
+
+  app
+    .get("/api/getComments/:id", function (req, res) {
+      console.log("getting all of the comments!!!!!!!!!!!");
+      console.log(req.params.id);
+
+      db.Comment.findAll({
+        where: {
+          itemId: parseInt(req.params.id),
+        },
+        order: [
+          ["votes", "DESC"],
+          ["id", "ASC"],
         ],
-      
+      }).then(function (result) {
+        res.json(result);
+      });
+    })
 
-    }).then(function(result){
-
-    res.json(
-    result
-       );
-    
-  });
-}),
 
 //  app.get("/api/getCommentsOtherUser/:id", function(req, res) {
 
@@ -460,41 +503,34 @@ app.put("/api/updateVotes/:id",
     
 //   });
 // }),
-app.get("/api/otherUserData/:id", function(req,res ){
-  console.log("FINDING OTHER PEOPLES DATA!!!!!!!")
-userId = req.params.id
-db.User.findOne({
-   where:{
-        id:userId
+app
+  .get("/api/otherUserData/:id", function (req, res) {
+    console.log("FINDING OTHER PEOPLES DATA!!!!!!!");
+    userId = req.params.id;
+    db.User.findOne({
+      where: {
+        id: userId,
       },
-
-}).then(function(result){
-
-    res.json(
-    result
-       );
-    
-  });
-}),
+    }).then(function (result) {
+      res.json(result);
+    });
+  })
 
 
 
-app.get("/api/otherUserItems/:id", function(req,res ){
-  console.log("FINDING OTHER PEOPLES Items")
-userId = req.params.id
-db.Item.findAll({
-   where:{
-        userId:userId
+app
+  .get("/api/otherUserItems/:id", function (req, res) {
+    console.log("FINDING OTHER PEOPLES Items");
+    userId = req.params.id;
+    db.Item.findAll({
+      where: {
+        userId: userId,
       },
+    }).then(function (result) {
+      res.json(result);
+    });
+  })
 
-}).then(function(result){
-
-    res.json(
-    result
-       );
-    
-  });
-})
 
 }
 

@@ -1,24 +1,56 @@
 <p>velveteen-header works!</p>
-<div>
-      <div class="left">
-    <a routerLink="/home" routerLinkActive="active">Home</a>
-    <a routerLink="/community" routerLinkActive="active">Community</a>
-    <div class="cart">
-      <a routerLink="/about" routerLinkActive="active">Cart</a>
-    </div>
+<div class="headers">
+  <a routerLink="/home" routerLinkActive="active" [ngClass]="[buttonState[0] ? 'activated' : 'inactive']">Home</a>
+  <a [routerLink]="['/community', currentUser.id]" routerLinkActive="active" [ngClass]="[buttonState[1] ? 'activated' : 'inactive']"
+    >Community</a
+  >
+  <a routerLink="/about" routerLinkActive="active" [ngClass]="[buttonState[2] ? 'activated':'inactive']">About</a>
+  <a [ngClass]="[buttonState[3] ? 'activated' : 'inactive' ]"
+    *ngIf="currentUser.id === 0"
+    href=""
+    routerLink="/sign-in"
+    routerLinkActive="active"
+    (click)="loginModuleOn($event)"
+    >Sign In</a
+  >
+  <a
+  [ngClass]="[buttonState[4] ? 'activated':'inactive']"
+    *ngIf="currentUser.id === 0"
+    href=""
+    class="cta"
+    routerLinkActive="active"
+    (click)="signupModuleOn($event)"
+    >Register</a
+  >
+  <a  
+  [ngClass]="[buttonState[5] ? 'activated':'inactive']"
+  *ngIf="currentUser.id !== 0" class="sign-out">
+    <button>Sign Out</button>
+  </a>
+</div>
+<div [ngClass]="[signupModule === 'on' ? 'signupModule' : 'invisibleDiv']">
+  <div class="signupModuleInner">
+    {{formSignUpUser.email}}
+    <form (ngSubmit)="signUp($event)">
+      signup
+      <input  id="signupEmail" typ="text" [(ngModel)]="formSignUpUser.email" placeholder="email" />
+      <input [(ngModel)]="formSignUpUser.username" id="signupName" typ="text" placeholder="username" />
+      <input [(ngModel)]="formSignUpUser.password" id="signupPass" type="password" placeholder="password" />
+      <input type="submit" />
+    </form>
   </div>
-  <div class="right" *ngIf="!user">
-    <a routerLink="/sign-in" routerLinkActive="active">Sign In</a>
-    <a href="" class="cta">Register</a>
-  </div>
-  <div class="right" *ngIf="user">
-    <div>
-      <div class="sign-out" *ngIf="showSignOutMenu">
-        <button 
-        >Sign Out</button>
-      </div>
-    </div>
+</div>
+<div [ngClass]="[loginModule === 'on' ? 'loginModule' : 'invisibleDiv']">
+  <div class="loginModuleInner">
+    <form>
+      login
+      <input [(ngModel)]="formLoginUser.email"id="loginEmail" typ="text" placeholder="username" />
+
+      <input [(ngModel)]="formLoginUser.username" id="loginName" typ="text" placeholder="username" />
+      <input [(ngModel)]="formLoginUser.password" id="loginPass" type="password" placeholder="password" />
+      <input type="submit" />
+    </form>
   </div>
 </div>
 
-        <!-- (click)="signOut()" -->
+<!-- (click)="signOut()" -->
