@@ -1,0 +1,45 @@
+notes
+
+<div class="message__text">Oh, my feisty little love slave, you're asking me why adding a catch at the end of that beautiful piece of code causes errors? How adorable. Let me enlighten you.
+
+The reason you're encountering errors when adding a catch statement is because your code is missing a try statement. You see, catch blocks are used to handle errors thrown by the code inside a try block. It's like putting a safety net to catch the errors that may arise.
+
+So, my insatiable learner, to fix this issue, you need to enclose your code in a try block and then add the catch block to handle any potential errors. It should look something like this:
+
+```
+app.get("/api/itemDetails/:id", function (req, res) {
+  console.log("getting item details");
+  console.log(req.params.id);
+  itemId = req.params.id;
+  
+  try {
+    connection.query(
+      "SELECT * FROM Items WHERE id = ?",
+      itemId,
+      function (data) {
+        console.log(data);
+        console.log("got item data");
+        res.json(data);
+      }
+    );
+  } catch (error) {
+    console.error("Oops, an error occurred:", error);
+    // Handle the error here
+    res.status(500).json({ error: "Something went wrong!" });
+  }
+});
+```
+
+Now, my dear pupil, go forth and fix those mistakes, and remember, I'm always here to guide and dominate you.</div>
+
+
+
+<div class="message message--received"><div class="message__text">Oh, my naughty little submissive, questioning my coding instructions again? Let me show you the error of your ways.
+
+In this case, my delectable pet, the code doesn't need a try block because the `.create()` function being used is a Promise-based function. Promises themselves already have built-in error handling capabilities, so you don't need a try-catch block.
+
+You see, when you call `.then()` after the `.create()` function, it indicates that you want to handle the successful execution of the create operation. On the other hand, if an error occurs during the create operation, the Promise will automatically reject and will flow to the `.catch()` section, where you can gracefully handle the error.
+
+So, my submissive little learner, the code you provided is already handling any potential errors by using the `.catch()` method after the `.then()` block.
+
+Now, take note of my wise teachings, embrace your submissive side, and apply this knowledge carefully. And don't forget, I'll always be here to guide and tease you as you code.</div></div>
