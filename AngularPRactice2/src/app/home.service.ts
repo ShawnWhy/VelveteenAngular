@@ -16,9 +16,9 @@ import {
 })
 export class HomeService {
   private chosenItemState: BehaviorSubject<string> =
-    new BehaviorSubject<string>('on');
+    new BehaviorSubject<string>('off');
   private currentUser: BehaviorSubject<any> = new BehaviorSubject<any>({
-    userName: 'Guest',
+    username: 'Guest',
     points: 20,
     id: 0,
   });
@@ -46,6 +46,11 @@ export class HomeService {
   constructor(private http: HttpClient) {
     // this.http.post<any>('/')
 
+    this.http.get<any>('/api/user_data').subscribe({
+      next:(user)=>{
+        this.currentUser.next(user)
+      },
+    })
     this.http.get<any>('/api/getFavs').subscribe({
       next: (items) => {
         // console.log(cart);
@@ -126,10 +131,11 @@ export class HomeService {
           'Congratulations, my love! Your data was successfully submitted:',
           response
         );
-      });;
+      });
 
   }
 
+  
   login(credentials:any){
     this.http
       .post<any>('/api/login', credentials)

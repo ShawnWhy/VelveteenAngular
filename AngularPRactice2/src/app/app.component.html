@@ -1,5 +1,6 @@
 {{modalState}}
 {{chosenItem.name}}
+<canvas #myCanvas></canvas>
 <bot-chosenitem [ngClass]="[modalState==='on' ? 'modalOuter' : 'invisibleDiv' ]"[chosenItem]="chosenItem"[currentUser]="currentUser"></bot-chosenitem>
 
 <app-velveteen-header [currentUser]="currentUser"></app-velveteen-header>

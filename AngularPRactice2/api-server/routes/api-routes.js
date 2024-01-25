@@ -75,6 +75,7 @@ try {
       
       connection.query ("SELECT * FROM comments ORDER By votes DESC, id ASC Limit 20",function(err, data){if(err) throw err;
        console.log("got top comments");
+      //  console.log(data)
        res.json(data)
       })
     });
@@ -115,6 +116,24 @@ app
   })
 
 
+  // app.get("/api/userItems/:id", function (req, res) {
+  //   userId = req.params.id;
+  //   console.log("getting USER ITEMS!!!!!!!!!!!!!!");
+  //   console.log(userId);
+  //   console.log("user id used to useritems++++++++++++++++++++++++");
+  //   connection.query(
+  //     "SELECT * FROM Items WHERE userId = 13",
+  //     userId,
+  //     function (data) {
+  //       console.log(data)
+  //       console.log("got the item for this guy++++++++++++++++++++++");
+  //       res.json(data);
+  //     }
+  //   );
+  // });
+
+
+
   app
     .get("/api/itemDetails/:id", function (req, res) {
       console.log("getting item etails");
@@ -149,14 +168,32 @@ app
       });
   });
  
-    app.post("/api/login", passport.authenticate("local"), function(req, res) {
-      console.log("authenticating")
-  res.json(req.user)
-  .catch(function (err) {
-    console.log(err);
-    res.status(401).json(err);
-  });;
-  });
+    // app
+    //   .post("/api/login", passport.authenticate("local"), function (req, res) {
+    //     console.log("authenticating");
+    //     res.json(req.user);
+    //   })
+
+    app.post("/api/login", function (req, res, next) {
+  passport.authenticate("local", function (err, user, info) {
+    if (err) {
+      // Handle any errors that occur during authentication
+      return next(err);
+    }
+    if (!user) {
+      // Custom error handling for failed authentication
+      return res.status(401).json({ message: "Authentication failed" });
+    }
+    // If authentication is successful, respond with the user object
+    req.logIn(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+      return res.json(req.user);
+    });
+  })(req, res, next);
+});
+  
   
   // Route for logging user out
 app.get('/api/logout', function(req, res, next) {
@@ -519,7 +556,7 @@ app
 
 
 app
-  .get("/api/otherUserItems/:id", function (req, res) {
+  .get("/api/userItems/:id", function (req, res) {
     console.log("FINDING OTHER PEOPLES Items");
     userId = req.params.id;
     db.Item.findAll({

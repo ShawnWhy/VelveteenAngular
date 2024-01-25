@@ -50,6 +50,20 @@ export class VelveteenHeaderComponent {
       points: this.formSignUpUser.points,
     });
   }
+  login(event:any){
+    event.preventDefault();
+    console.log(this.formLoginUser)
+    this.homeSvc.login({
+      username:this.formLoginUser.username,
+      password:this.formLoginUser.password
+
+    })
+  }
+
+  signOut(event:any){
+    console.log("signing out")
+    this.homeSvc.signOut()
+  }
 
   signupModuleOn(e: any) {
     e.preventDefault();

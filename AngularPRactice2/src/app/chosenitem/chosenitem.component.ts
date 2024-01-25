@@ -63,7 +63,7 @@ export class ChosenitemComponent {
   ) {}
 
   ngOnInit() {
-    console.log('this.currentUser' + this.currentUser.userName);
+    console.log('this.currentUser' + this.currentUser.username);
     console.log('this.chosenitem.id' + this.chosenItem.id);
     this.ChosSvc.getComments(this.chosenItem.id).subscribe((comments) => {
       this.itemComments = comments;

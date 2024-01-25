@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HomeService } from './home.service';
@@ -15,22 +15,60 @@ import { VelveteenHeaderComponent } from './velveteen-header/velveteen-header.co
     VelveteenHeaderComponent,
     CommonModule,
     RouterOutlet,
-    ChosenitemComponent
+    ChosenitemComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
+  @ViewChild('myCanvas', { static: false })
+  canvasRef: any
+  public context: any
 
-  modalState:string = "off"
+  ngAfterViewInit() {
+    const canvas: HTMLCanvasElement = this.canvasRef.nativeElement;
+    this.context = canvas.getContext('2d');
+    if (!this.context) {
+      throw new Error('Unable to obtain 2D rendering context');
+    }
+    this.startAnimation();
+  }
+
+  startAnimation() {
+    requestAnimationFrame(() => this.animate());
+  }
+  private i:number = 4
+  animate() {
+    // Clear canvas
+    
+    this.context.clearRect(
+      0,
+      0,
+      this.canvasRef.nativeElement.width,
+      this.canvasRef.nativeElement.height
+    );
+
+    // Draw your animated elements here
+    // Example:
+    this.context.fillStyle = '#FF0000';
+     this.i++;
+    this.context.fillRect(0, 0, this.i, this.canvasRef.nativeElement.height);
+    if (this.i > this.canvasRef.nativeElement.width) {
+      this.i = 0;
+    }
+
+    // Update animation state or draw new elements
+
+    // Call next animation frame
+    requestAnimationFrame(() => this.animate());
+  }
+
+  modalState: string = 'off';
   title = 'The Velveteen Exchange';
   FavItems: any[] = [];
   TopComments: any[] = [];
   currentUser: any = {};
-  public chosenItem: any = {
-   
-  };
-
+  public chosenItem: any = {};
 
   constructor(private HomeSvc: HomeService) {
     setTimeout(() => {
@@ -45,18 +83,18 @@ export class AppComponent {
   changeUser(newName: any) {
     console.log('newname');
     console.log(newName);
-    this.currentUser.userName = newName;
+    this.currentUser.username = newName;
   }
   ngOnInit() {
     console.log('home');
 
-    this.HomeSvc.getChosenItem().subscribe((item)=>{
+    this.HomeSvc.getChosenItem().subscribe((item) => {
       this.chosenItem = item;
-    })
+    });
 
-    this.HomeSvc.getItemModalState().subscribe((state)=>{
-      this.modalState=state;
-    })
+    this.HomeSvc.getItemModalState().subscribe((state) => {
+      this.modalState = state;
+    });
 
     this.HomeSvc.getCurrentUser().subscribe((user) => {
       console.log(user);

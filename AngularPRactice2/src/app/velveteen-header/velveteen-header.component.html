@@ -6,16 +6,16 @@
   >
   <a routerLink="/about" routerLinkActive="active" [ngClass]="[buttonState[2] ? 'activated':'inactive']">About</a>
   <a [ngClass]="[buttonState[3] ? 'activated' : 'inactive' ]"
-    *ngIf="currentUser.id === 0"
+    *ngIf="currentUser.id === 0 || !currentUser.id"
     href=""
-    routerLink="/sign-in"
+    routerLink=""
     routerLinkActive="active"
     (click)="loginModuleOn($event)"
     >Sign In</a
   >
   <a
   [ngClass]="[buttonState[4] ? 'activated':'inactive']"
-    *ngIf="currentUser.id === 0"
+    *ngIf="currentUser.id === 0 || !currentUser.id"
     href=""
     class="cta"
     routerLinkActive="active"
@@ -23,9 +23,13 @@
     >Register</a
   >
   <a  
+  (click)="signOut($event)"
   [ngClass]="[buttonState[5] ? 'activated':'inactive']"
-  *ngIf="currentUser.id !== 0" class="sign-out">
-    <button>Sign Out</button>
+    href=""
+    class="cta"
+    routerLinkActive="active"
+  *ngIf="currentUser.id !== 0 && currentUser.id" class="sign-out">
+    Sign Out
   </a>
 </div>
 <div [ngClass]="[signupModule === 'on' ? 'signupModule' : 'invisibleDiv']">
@@ -33,21 +37,21 @@
     {{formSignUpUser.email}}
     <form (ngSubmit)="signUp($event)">
       signup
-      <input  id="signupEmail" typ="text" [(ngModel)]="formSignUpUser.email" placeholder="email" />
-      <input [(ngModel)]="formSignUpUser.username" id="signupName" typ="text" placeholder="username" />
-      <input [(ngModel)]="formSignUpUser.password" id="signupPass" type="password" placeholder="password" />
+      <input  id="signupEmail" typ="text"  placeholder="email" name="signupemail" [(ngModel)]="formSignUpUser.email" />
+      <input  id="signupName" typ="text" placeholder="username" name = "signupusername" [(ngModel)]="formSignUpUser.username"/>
+      <input  id="signupPass" type="password" placeholder="password" name="signuppassword" [(ngModel)]="formSignUpUser.password" />
       <input type="submit" />
     </form>
   </div>
 </div>
 <div [ngClass]="[loginModule === 'on' ? 'loginModule' : 'invisibleDiv']">
   <div class="loginModuleInner">
-    <form>
+    <form (ngSubmit)="login($event)">
       login
-      <input [(ngModel)]="formLoginUser.email"id="loginEmail" typ="text" placeholder="username" />
+      <input [(ngModel)]="formLoginUser.email"name = "loginEmail" id="loginEmail" typ="text" placeholder="username" />
 
-      <input [(ngModel)]="formLoginUser.username" id="loginName" typ="text" placeholder="username" />
-      <input [(ngModel)]="formLoginUser.password" id="loginPass" type="password" placeholder="password" />
+      <input [(ngModel)]="formLoginUser.username" name = "loginName" id="loginName" typ="text" placeholder="username" />
+      <input [(ngModel)]="formLoginUser.password" name = "loginPass" id="loginPass" type="password" placeholder="password" />
       <input type="submit" />
     </form>
   </div>

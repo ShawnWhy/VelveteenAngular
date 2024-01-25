@@ -35,7 +35,7 @@ export class HomeComponent {
     
 
     this.HomeSvc.setCurrentUser({
-      userName: this.currentUser.userName,
+      username: this.currentUser.username,
       points: this.currentUser.points-1,
       id: this.currentUser.id,
     });
@@ -55,7 +55,7 @@ export class HomeComponent {
   changeUser(newName: any) {
     console.log('newname');
     console.log(newName);
-    this.currentUser.userName = newName;
+    this.currentUser.username = newName;
   }
 
   constructor(private HomeSvc: HomeService) {
