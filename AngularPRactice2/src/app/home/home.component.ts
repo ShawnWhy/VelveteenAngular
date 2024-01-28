@@ -21,7 +21,11 @@ export class HomeComponent {
   @Input() TopComments: any[] = [];
   @Input() currentUser: any = {};
 
+  public cardMoveActivation:boolean[]=
+  []
 
+
+  private scrollTrigget = "on";
 
   public randomNumber = 2;
 
@@ -75,6 +79,28 @@ export class HomeComponent {
     this.HomeSvc.setChosenItem(this.FavItems[number]);
   }
 
+  favsOnScroll(){
+    console.log("onscroll")
+if(this.scrollTrigget=="on"){
+    for (let i = 0; i < this.cardMoveActivation.length; i++) {
+      let randomNumber: number = Math.floor(Math.random() * 10);
+      if (randomNumber >= 6) {
+        this.cardMoveActivation[i] = true;
+        setTimeout(() => {
+          this.cardMoveActivation[i] = false;
+        }, 600);
+      }
+      this.scrollTrigget="off"
+      setTimeout(() => {
+        this.scrollTrigget="on"
+      }, 400);
+    }
+    }
+
+
+    
+  }
+
   ngOnInit() {
     this.HomeSvc.getCurrentUser().subscribe((user) => {
       console.log(user);
@@ -84,6 +110,9 @@ export class HomeComponent {
     this.HomeSvc.getFavs().subscribe((FavItems) => {
       console.log(FavItems);
       this.FavItems = FavItems;
+      for(let i=0; i<FavItems.length; i++){
+       this.cardMoveActivation.push(false)
+      }
     });
 
     this.HomeSvc.getNumber().subscribe((number) => {

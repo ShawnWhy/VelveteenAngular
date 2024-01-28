@@ -2,10 +2,10 @@
 
 
   <div>HOME number: {{randomNumber}}</div>
-  <div>{{FavItems[0].likes.toString()}}</div>
+    <!-- <div>{{FavItems[0].likes.toString()}}</div> -->
 
-  <ul style = "display:flex;min-width:100%; overflow:scroll; height:250px">
-  <li [ngStyle]="{'float':'left', 'width':'25%','min-width': '250px', 'border':'black solid 1px'}" *ngFor="let item of FavItems; index as i" [attr.itemId]="i" >
+  <ul (scroll)="favsOnScroll()" style = "display:flex;min-width:100%; overflow:scroll; height:250px">
+  <li [ngStyle]="{'float':'left', 'width':'25%','min-width': '250px', 'border':'black solid 1px'}" *ngFor="let item of FavItems; index as i" [attr.itemId]="i" [ngClass]="[cardMoveActivation[i]==true ? 'cardShift card' : 'card' ]">
     <div class = "itemName" (click)="setChosenItem(i)">{{item.name}}</div>
     <div  class = "itemLike" (click)="currentUser.points>0 && submitLike(i,item.likes, item.id, item.userId)">{{i+1}} {{item.likes.toString()}}</div>
     <div [ngStyle]="{ 'min-height': '150px','background-image': 'url(' + item.imageUrl1.toString() + ')' }"></div>

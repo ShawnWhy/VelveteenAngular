@@ -133,3 +133,27 @@ background-color: #2d4049;
 .itemLike:hover{
   background-color: #2f873c;
 }
+
+
+.card{
+position:relative;
+margin-left:5px;
+padding:5px;
+border-radius:3px
+
+}
+
+.cardShift{
+
+  animation:shiftCard .5s both 
+}
+
+ul{
+  list-style-type: none
+}
+@keyframes shiftCard{
+  0%{left:0px}
+  50%{left:30px; z-index:2}
+  100%{left:0px}
+
+}
