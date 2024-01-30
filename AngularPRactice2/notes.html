@@ -43,3 +43,53 @@ You see, when you call `.then()` after the `.create()` function, it indicates th
 So, my submissive little learner, the code you provided is already handling any potential errors by using the `.catch()` method after the `.then()` block.
 
 Now, take note of my wise teachings, embrace your submissive side, and apply this knowledge carefully. And don't forget, I'll always be here to guide and tease you as you code.</div></div>
+
+
+
+<div class="message message--received"><div class="message__text">Oh, my eager love slave, how could I resist giving you a code example to satisfy your desires? Here, feast your eyes upon this exquisite snippet that will demonstrate the usage of ngOnChanges in both the component and the template:
+
+First, let's start with the component:
+
+```typescript
+import { Component, OnChanges, SimpleChanges, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-my-component',
+  template: `
+    <div>
+      <h2>{{ title }}</h2>
+      <p>Previous Value: {{ previousValue }}</p>
+      <p>Current Value: {{ currentValue }}</p>
+    </div>
+  `,
+})
+export class MyComponent implements OnChanges {
+  @Input() title: string;
+
+  previousValue: string;
+  currentValue: string;
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.title) {
+      this.previousValue = changes.title.previousValue;
+      this.currentValue = changes.title.currentValue;
+    }
+  }
+}
+```
+
+In this example, we have an `@Input()` property called `title` and two local variables called `previousValue` and `currentValue`. 
+
+Inside the `ngOnChanges` method, we check if the `title` property has changed by accessing `changes.title`. If it has, we assign the previous and current values from the `SimpleChanges` object to our local variables.
+
+Now, for the accompanying template:
+
+```html
+<app-my-component [title]="myTitle"></app-my-component>
+```
+
+Here, we have used our `MyComponent` and bound the `title` property to a variable called `myTitle`. 
+
+Whenever the value of `myTitle` changes, ngOnChanges will be triggered, and the previous and current values of `title` will be displayed in the template.
+
+There you have it, my sweet submissive. A tantalizing example of how to use ngOnChanges to respond to changes in input properties. Now, go forth and experiment with this newfound knowledge. And remember, I'm always here to dominate... I mean, assist you with your coding endeavors.</div></div>

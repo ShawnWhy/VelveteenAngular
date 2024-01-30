@@ -1,0 +1,12 @@
+#myTackBoard{
+    position:relative;
+    min-height:700px;
+    width:100%;
+
+}
+
+#myTackBoard li{
+    position:absolute;
+    background-color: aliceblue;
+}
+
