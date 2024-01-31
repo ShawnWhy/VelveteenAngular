@@ -328,6 +328,16 @@ export class HomeService {
         );
       });
   }
+
+  updateCommentLikes(i:number){
+
+    let tempComments = this.TopComments.value[i].id
+    console.log(tempComments)
+    // let tempId = tempComments[i]
+    
+      
+    
+  }
   // add(product: Item) {
   //   const newCart = [...this.cart.getValue(), product];
   //   this.cart.next(newCart);

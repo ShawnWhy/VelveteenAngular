@@ -25,7 +25,7 @@ export class HomeComponent {
   []
 
 
-  private scrollTrigget = "on";
+  private scrollTrigger = "on";
 
   public randomNumber = 2;
 
@@ -81,7 +81,7 @@ export class HomeComponent {
 
   favsOnScroll(){
     console.log("onscroll")
-if(this.scrollTrigget=="on"){
+if(this.scrollTrigger=="on"){
     for (let i = 0; i < this.cardMoveActivation.length; i++) {
       let randomNumber: number = Math.floor(Math.random() * 10);
       if (randomNumber >= 6) {
@@ -90,10 +90,10 @@ if(this.scrollTrigget=="on"){
           this.cardMoveActivation[i] = false;
         }, 600);
       }
-      this.scrollTrigget="off"
+      this.scrollTrigger="off"
       setTimeout(() => {
-        this.scrollTrigget="on"
-      }, 400);
+        this.scrollTrigger="on"
+      }, 300)
     }
     }
 
@@ -124,8 +124,16 @@ if(this.scrollTrigget=="on"){
       console.log(topComments);
       this.TopComments = topComments;
     });
-    // this.route.queryParams.subscribe((params) => {
+
+   // this.route.queryParams.subscribe((params) => {
     //   this.filter = params['filter'] ?? '';
     // })
+  }
+
+  updateCommentLikes(i:number){
+    console.log("likedcomment" + i)
+    this.TopComments[i].votes+=1;
+    this.HomeSvc.updateCommentLikes(i)
+
   }
 }

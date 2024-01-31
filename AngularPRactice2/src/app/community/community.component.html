@@ -1,10 +1,13 @@
 
 <p>Welcome {{filter}} !!!!!</p>
-  <ul (mousemove)="moveCard($event)" id="myTackBoard" style = "display:flex;min-width:100%; overflow:scroll; height:250px">
+  <ul 
+  
+  (click)="dropCard($event)"
+  
+  (mousemove)="moveCard($event)" id="myTackBoard" style = "display:flex;min-width:100%; overflow:scroll; height:250px">
   <li [ngStyle]="{'float':'left', 'width':'25%','min-width': '250px', 'border':'black solid 1px', 
-  'top':itemPositions.y + 'px',
-  'left':itemPositions.x + 'px'
-}" 
+  'top':userItemPositions[i][1] + 'px',
+  'left':userItemPositions[i][0] + 'px'}" 
   
   *ngFor="let item of userItems; index as i" [attr.itemId]="i" >
     <div class = "itemName" (click)="setChosenItem(i)">{{item.name}}</div>

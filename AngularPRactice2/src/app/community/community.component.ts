@@ -51,7 +51,7 @@ export class CommunityComponent {
           console.log(items);
           this.userItems = items;
           for (let i = 0; i < items.length; i++) {
-            this.userItemPositions.push([0, 0]);
+            this.userItemPositions.push([i*20, i*20]);
           }
         },
       });
@@ -65,20 +65,29 @@ export class CommunityComponent {
     this.selectedCard = index;
   }
 
+  dropCard(event:any){
+    console.log("droppingcard")
+          console.log(event.target.id);
+
+    if(event.target.id==="myTackBoard"){
+    this.selectedCard=null;
+    }
+  
+}
   moveCard(event: MouseEvent) {
-     this.changeDetectorRef.detectChanges();
+    //  this.changeDetectorRef.detectChanges();
     console.log("movingcard")
     console.log(this.selectedCard)
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
     console.log(mouseX)
     console.log(mouseY)
-if(this.selectedCard){
-     this.itemPositions.x= mouseX;
-     this.itemPositions.y = mouseY;
-    // this.userItemPositions[this.selectedCard][0] = mouseX;
-    // this.userItemPositions[this.selectedCard][1] = mouseY;
-    console.log(this.userItemPositions[this.selectedCard]);
+if(this.selectedCard !==null){
+    //  this.itemPositions.x= mouseX;
+    //  this.itemPositions.y = mouseY;
+    this.userItemPositions[this.selectedCard][0] = mouseX+10;
+    this.userItemPositions[this.selectedCard][1] = mouseY+10;
+    console.log(this.userItemPositions);
 
 }
 
