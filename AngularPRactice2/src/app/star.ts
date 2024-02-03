@@ -12,7 +12,7 @@ radius:number
 fillStyle:any
 	constructor(x:any, y:any, fillStyle:any) {
 		this.pos = new Vector(x, y);
-		this.vel = new Vector((Math.random()*2-1)*.5, (Math.random()*2-1)*.5);
+		this.vel = new Vector((Math.random()*2-1)*.1, (Math.random()*2-1)*.5);
 		this.radius = Math.floor(Math.random()*40+15)
 		this.fillStyle = fillStyle
 	}

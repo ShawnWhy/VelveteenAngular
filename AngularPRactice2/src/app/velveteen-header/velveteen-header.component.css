@@ -1,13 +1,18 @@
 .signupModule{
+    top:0;
     position:absolute;
     height:100%;
     width:100%;
     position:absolute;
     background-color: white;
     animation:fromLeft .5s both;
+        z-index:1000;
+
 }
 
 .loginModule{
+        top:0;
+
     position:absolute;
     height:100%;
     width:100%;
@@ -15,6 +20,8 @@
         background-color: white;
 
     animation:fromLeft .5s both;
+        z-index:1000;
+
 
 
 }

@@ -405,7 +405,7 @@ app.put("/api/updateBids/:id",
 
 //updatecomment votes
 
-app.put("/api/updateVotes/:id",
+app.put("/api/updateCommentVotes/:id",
    
   function(req, res){
     console.log(req.body);

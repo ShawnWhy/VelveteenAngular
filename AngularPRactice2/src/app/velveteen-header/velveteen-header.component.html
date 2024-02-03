@@ -1,3 +1,31 @@
+<div [ngClass]="[signupModule === 'on' ? 'signupModule' : 'invisibleDiv']">
+ <div class="closeModal" (click)="closeModal()">X</div>
+  <div class="signupModuleInner">
+    {{formSignUpUser.email}}
+    <form (ngSubmit)="signUp($event)">
+      signup
+      <input  id="signupEmail" typ="text"  placeholder="email" name="signupemail" [(ngModel)]="formSignUpUser.email" />
+      <input  id="signupName" typ="text" placeholder="username" name = "signupusername" [(ngModel)]="formSignUpUser.username"/>
+      <input  id="signupPass" type="password" placeholder="password" name="signuppassword" [(ngModel)]="formSignUpUser.password" />
+      <input type="submit" />
+    </form>
+  </div>
+</div>
+<div [ngClass]="[loginModule === 'on' ? 'loginModule' : 'invisibleDiv']">
+   <div class="closeModal" (click)="closeModal()">X</div>
+
+  <div class="loginModuleInner">
+    <form (ngSubmit)="login($event)">
+      login
+      <input [(ngModel)]="formLoginUser.email"name = "loginEmail" id="loginEmail" typ="text" placeholder="username" />
+
+      <input [(ngModel)]="formLoginUser.username" name = "loginName" id="loginName" typ="text" placeholder="username" />
+      <input [(ngModel)]="formLoginUser.password" name = "loginPass" id="loginPass" type="password" placeholder="password" />
+      <input type="submit" />
+    </form>
+  </div>
+</div>
+
 <div class="headers">
   <a routerLink="/home" routerLinkActive="active" [ngClass]="[buttonState[0] ? 'activated' : 'inactive']">Home</a>
   <a [routerLink]="['/community', currentUser.id]" routerLinkActive="active" [ngClass]="[buttonState[1] ? 'activated' : 'inactive']"
@@ -31,29 +59,6 @@
     Sign Out
   </a>
 </div>
-<div [ngClass]="[signupModule === 'on' ? 'signupModule' : 'invisibleDiv']">
-  <div class="signupModuleInner">
-    {{formSignUpUser.email}}
-    <form (ngSubmit)="signUp($event)">
-      signup
-      <input  id="signupEmail" typ="text"  placeholder="email" name="signupemail" [(ngModel)]="formSignUpUser.email" />
-      <input  id="signupName" typ="text" placeholder="username" name = "signupusername" [(ngModel)]="formSignUpUser.username"/>
-      <input  id="signupPass" type="password" placeholder="password" name="signuppassword" [(ngModel)]="formSignUpUser.password" />
-      <input type="submit" />
-    </form>
-  </div>
-</div>
-<div [ngClass]="[loginModule === 'on' ? 'loginModule' : 'invisibleDiv']">
-  <div class="loginModuleInner">
-    <form (ngSubmit)="login($event)">
-      login
-      <input [(ngModel)]="formLoginUser.email"name = "loginEmail" id="loginEmail" typ="text" placeholder="username" />
 
-      <input [(ngModel)]="formLoginUser.username" name = "loginName" id="loginName" typ="text" placeholder="username" />
-      <input [(ngModel)]="formLoginUser.password" name = "loginPass" id="loginPass" type="password" placeholder="password" />
-      <input type="submit" />
-    </form>
-  </div>
-</div>
 
 <!-- (click)="signOut()" -->

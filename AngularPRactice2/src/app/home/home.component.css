@@ -158,8 +158,14 @@ ul{
 
 }
 
+#topComments{
+  max-height:300px;
+  overflow-y: scroll;
+}
+
 #topComments li:hover{
 
   background-color: #5cadd2;
 
 }
+

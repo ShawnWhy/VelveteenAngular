@@ -1,5 +1,6 @@
 <p>chosen Item</p>
-
+<div id="itemLeft" (click)="moveItemLeft()"><</div>
+<div id="itemRight" (click)="moveItemRight()">></div>
 <div class ="closeModal" (click)="turnoffModal($event)">X</div>
 <div id="innerChosenItem">
 {{chosenItem.name}}</div><div>
@@ -11,12 +12,18 @@
 <div>{{chosenItem.highestBid}}</div><div>
 {{chosenItem.itemStory}}
 </div>
-<ul>
-    <li  *ngFor="let comment of itemComments; let i = index" [attr.data-index]="i" [attr.userid]="comment.userId">
+    <div class="chosenImage" [ngStyle]="{ 'min-height': '150px','background-image': 'url(' + chosenItem.imageArray[chosenItem.imageNumber] + ')' }"></div>
+
+<ul class="commentList">
+    <li class="commentArrayElement"  *ngFor="let comment of itemComments; let i = index" [attr.data-index]="i" [attr.userid]="comment.userId">
          {{comment.comment.toString()}}
     </li>
 </ul>
-
+<form (ngSubmit)="submitComment($event)">
+<input class="commentList" name="commentInput" type="text" [(ngModel)]="newComment">
+{{newComment}}
+<input type="submit" value="Submit  Comment">
+</form>
 <div>
 
 

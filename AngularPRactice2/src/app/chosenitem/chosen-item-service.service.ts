@@ -27,9 +27,11 @@ export class ChosenItemServiceService {
     return this.itemComments;
   }
 
-  submitComment(info: any) {
+  submitComment(item:any) {
+   
     this.http
-      .post<any>('/api/postComment', info)
+      .post<any>('/api/postComment', item
+      )
       .pipe(
         catchError((error: any) => {
           console.log('Oops! Something went wrong:', error.message);

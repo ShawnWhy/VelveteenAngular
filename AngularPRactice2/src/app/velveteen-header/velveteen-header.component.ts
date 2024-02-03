@@ -7,7 +7,14 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-velveteen-header',
   standalone: true,
-  imports: [FormsModule,NgClass, NgIf, RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [
+    FormsModule,
+    NgClass,
+    NgIf,
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet,
+  ],
   templateUrl: './velveteen-header.component.html',
   styleUrl: './velveteen-header.component.css',
 })
@@ -30,7 +37,7 @@ export class VelveteenHeaderComponent {
     email: '',
     password: '',
     username: '',
-   };
+  };
 
   ngOnInit() {
     for (let i = 0; i < this.buttonState.length; i++) {
@@ -40,9 +47,9 @@ export class VelveteenHeaderComponent {
     }
   }
 
-  signUp(event:any) {
+  signUp(event: any) {
     event.preventDefault();
-    console.log(this.formSignUpUser)
+    console.log(this.formSignUpUser);
     this.homeSvc.signUp({
       email: this.formSignUpUser.email,
       password: this.formSignUpUser.password,
@@ -50,19 +57,18 @@ export class VelveteenHeaderComponent {
       points: this.formSignUpUser.points,
     });
   }
-  login(event:any){
+  login(event: any) {
     event.preventDefault();
-    console.log(this.formLoginUser)
+    console.log(this.formLoginUser);
     this.homeSvc.login({
-      username:this.formLoginUser.username,
-      password:this.formLoginUser.password
-
-    })
+      username: this.formLoginUser.username,
+      password: this.formLoginUser.password,
+    });
   }
 
-  signOut(event:any){
-    console.log("signing out")
-    this.homeSvc.signOut()
+  signOut(event: any) {
+    console.log('signing out');
+    this.homeSvc.signOut();
   }
 
   signupModuleOn(e: any) {
@@ -76,5 +82,10 @@ export class VelveteenHeaderComponent {
     e.preventDefault();
     this.signupModule = 'off';
     this.loginModule = 'on';
+  }
+
+  closeModal() {
+    this.signupModule = 'off';
+    this.loginModule = 'off';
   }
 }

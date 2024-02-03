@@ -16,8 +16,8 @@
 </ul>
 
 <ul id = "topComments">
-    <li  *ngFor="let comment of TopComments; let i = index" [attr.data-index]="i" [attr.userid]="comment.userId" (click)="updateCommentLikes(i)">
-         {{comment.comment.toString()}}
+    <li  *ngFor="let comment of TopComments; let i = index" [attr.data-index]="i" [attr.userid]="comment.userId" (click)="currentUser.points>0 && updateCommentLikes(i)">
+         {{comment.userName.toString()}} : {{comment.comment.toString()}}
          <p>{{TopComments[i].votes.toString()}}</p>
     </li>
 </ul>

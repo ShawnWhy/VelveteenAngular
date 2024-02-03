@@ -29,6 +29,8 @@ export class HomeComponent {
 
   public randomNumber = 2;
 
+
+
   submitLike(
     itemindex: number,
     like: number,
@@ -53,7 +55,7 @@ export class HomeComponent {
       itemId,
       itemUserId,
       this.currentUser.id,
-      this.currentUser.points - 1
+      this.currentUser.points
     );
   }
   changeUser(newName: any) {
@@ -131,9 +133,20 @@ if(this.scrollTrigger=="on"){
   }
 
   updateCommentLikes(i:number){
-    console.log("likedcomment" + i)
-    this.TopComments[i].votes+=1;
-    this.HomeSvc.updateCommentLikes(i)
+
+        this.HomeSvc.setCurrentUser({
+          username: this.currentUser.username,
+          points: this.currentUser.points - 1,
+          id: this.currentUser.id,
+        });
+
+        let tempComments: any[] = this.TopComments;
+        tempComments[i].votes +=1;
+        this.HomeSvc.setTopComments(tempComments);
+    // console.log("likedcomment" + i)
+
+
+    this.HomeSvc.submitCommentVotes(i, this.currentUser.id, this.currentUser.points)
 
   }
 }

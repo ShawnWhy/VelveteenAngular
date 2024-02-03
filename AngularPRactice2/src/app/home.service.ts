@@ -32,9 +32,11 @@ export class HomeService {
     itemStory: 'once he took a ferry to the netherlands',
     likes: 229,
     name: 'Borishka',
+    imageArray :[],
 
     userId: 3,
   });
+
 
   private Favs: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   private TopComments: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
@@ -46,11 +48,56 @@ export class HomeService {
   constructor(private http: HttpClient) {
     // this.http.post<any>('/')
 
-    this.http.get<any>('/api/user_data').subscribe({
-      next:(user)=>{
-        this.currentUser.next(user)
+
+    // .pipe(
+    //     catchError((error: any) => {
+    //       console.log('Oops! Something went wrong 0:', error.message);
+    //       return throwError(
+    //         'Oh, my dear, there was an error while submitting your data. Please try again later.'
+    //       );
+    //     }),
+    //     concatMap((response: any) => {
+    //       console.log(response);
+    //       console.log(response.points);
+    //       return this.http
+    //         .put<any>('/api/changePoints/' + itemUserId, {
+    //           points: response.points + 1,
+    //         })
+    //         .pipe(
+    //           catchError((error: any) => {
+    //             console.log('Oops! Something went wrong 1:', error.message);
+    //             return throwError(
+    //               'Oh, my dear, there was an error while submitting your data. Please try again later.'
+    //             );
+    //           })
+
+    this.http.get<any>('/api/user_data')
+    .subscribe({
+      next: (user) => {
+        console.log("user is here!!!")
+        console.log(user)
+        if(!user.id){
+          user = {
+            username: 'Guest',
+            points: 20,
+            id: 0,
+          };
+        }
+        this.currentUser.next(user);
+        this.http
+          .get<any>('/api/getPoints/' + this.currentUser.value.id)
+          .subscribe({
+            next: (point) => {
+              console.log(this.currentUser.value.id);
+
+              console.log('gotten points from the database');
+              console.log(point);
+              this.currentUser.value.points = point.points;
+            },
+          }); 
       },
-    })
+    });
+    
     this.http.get<any>('/api/getFavs').subscribe({
       next: (items) => {
         // console.log(cart);
@@ -79,6 +126,12 @@ export class HomeService {
   setChosenItem(item: any) {
     console.log('setchoseinITem2');
     console.log(item);
+    item.imageNumber = 0;
+    item.imageArray = [
+      item.imageUrl1,
+      item.imageUrl2,
+      item.imageUrl3
+    ]
     this.chosenItem.next(item);
   }
   getNumber() {
@@ -93,6 +146,10 @@ export class HomeService {
   }
   getChosenItem(): Observable<any> {
     return this.chosenItem.asObservable();
+  }
+
+  setTopComments(comments:any[]){
+    this.TopComments.next(comments);
   }
 
   getTopComments(): Observable<any[]> {
@@ -111,8 +168,7 @@ export class HomeService {
     this.chosenItemState.next('on');
   }
 
-  signUp(credentials:any){
-
+  signUp(credentials: any) {
     this.http
       .post<any>('/api/signUp', credentials)
       .pipe(
@@ -132,11 +188,9 @@ export class HomeService {
           response
         );
       });
-
   }
 
-  
-  login(credentials:any){
+  login(credentials: any) {
     this.http
       .post<any>('/api/login', credentials)
       .pipe(
@@ -158,9 +212,8 @@ export class HomeService {
       });
   }
 
-  signOut(){
-    
-      this.http
+  signOut() {
+    this.http
       .get<any>('/api/logout')
       .pipe(
         catchError((error: any) => {
@@ -179,12 +232,11 @@ export class HomeService {
           response
         );
       });
-
   }
 
   createItem(item: any) {
-    console.log("creatingItem")
-    console.log(item)
+    console.log('creatingItem');
+    console.log(item);
     console.log(this.currentUser.value.id);
     let newItem: any = {
       userId: this.currentUser.value.id,
@@ -223,6 +275,8 @@ export class HomeService {
     myUserId: number,
     myUserPoints: number
   ) {
+
+ 
     console.log('submitlike');
     console.log(like);
     console.log(itemId);
@@ -238,7 +292,7 @@ export class HomeService {
         }),
         concatMap((response: any) => {
           console.log(response);
-          console.log(response.points);
+          // console.log(response.points);
           return this.http
             .put<any>('/api/changePoints/' + itemUserId, {
               points: response.points + 1,
@@ -253,7 +307,105 @@ export class HomeService {
               concatMap((response: any) => {
                 return this.http
                   .put<any>('/api/changePoints/' + myUserId, {
-                    points: myUserPoints - 1,
+                    points: myUserPoints,
+                  })
+                  .pipe(
+                    catchError((error: any) => {
+                      console.log(
+                        'Oops! Something went wrong 2:',
+                        error.message
+                      );
+                      return throwError(
+                        'Oh, my dear, there was an error while submitting your data. Please try again later.'
+                      );
+                    }),
+                    concatMap((response: any) => {
+                      console.log("updating likes ")
+                      console.log(like);
+                      return this.http
+                        .put<any>('/api/updateLikes/' + itemId, {
+                          likes: like + 1,
+                        })
+                        .pipe(
+                          catchError((error: any) => {
+                            console.log(
+                              'Oops! Something went wrong 3:',
+                              error.message
+                            );
+                            return throwError(
+                              'Oh, my dear, there was an error while submitting your data. Please try again later.'
+                            );
+                          })
+                        );
+                    })
+                  );
+              })
+            );
+        })
+      )
+      .subscribe((response: any) => {
+        console.log(
+          'Congratulations, my love! Your data was successfully submitted:',
+          response
+        );
+      });
+  }
+
+  // updateCommentLikes(i: number) {
+  //   let tempComments = this.TopComments.value[i].id;
+  //   console.log(tempComments);
+  //   // let tempId = tempComments[i]
+  // }
+
+  submitCommentVotes(
+    i:number,
+    myUserId: number,
+    myUserPoints: number
+  ) {
+      let tempComments = this.TopComments.value[i];
+      console.log(tempComments);
+      let commentId = tempComments.id;
+      let commentUserId = tempComments.userId;
+      let vote = tempComments.votes;
+
+
+    console.log('submitVotes');
+    console.log(vote);
+    console.log(myUserPoints)
+    console.log(commentUserId);
+    console.log(myUserId)
+    console.log;
+    return this.http
+      .get<any>('/api/getPoints/' + commentUserId)
+      .pipe(
+        catchError((error: any) => {
+          console.log('Oops! Something went wrong 0:', error.message);
+          return throwError(
+            'Oh, my dear, there was an error while submitting your data. Please try again later.'
+          );
+        }),
+        concatMap((response: any) => {
+          console.log(response);
+          console.log(response.points);
+          return this.http
+            .put<any>('/api/changePoints/' + commentUserId, {
+              points: response.points + 1,
+            })
+            .pipe(
+              catchError((error: any) => {
+                console.log('Oops! Something went wrong 1:', error.message);
+                return throwError(
+                  'Oh, my dear, there was an error while submitting your data. Please try again later.'
+                );
+              }),
+              concatMap((response: any) => {
+
+                console.log("updated the other user's points")
+                console.log(myUserPoints);
+                console.log(myUserId)
+                return this.http
+                  .put<any>('/api/changePoints/' + myUserId, {
+                    points: myUserPoints,
                   })
                   .pipe(
                     catchError((error: any) => {
@@ -267,8 +419,8 @@ export class HomeService {
                     }),
                     concatMap((response: any) => {
                       return this.http
-                        .put<any>('/api/updateLikes/' + itemId, {
-                          likes: like + 1,
+                        .put<any>('/api/updateCommentVotes/' + commentId, {
+                          votes: vote,
                         })
                         .pipe(
                           catchError((error: any) => {
@@ -329,15 +481,11 @@ export class HomeService {
       });
   }
 
-  updateCommentLikes(i:number){
-
-    let tempComments = this.TopComments.value[i].id
-    console.log(tempComments)
-    // let tempId = tempComments[i]
-    
-      
-    
-  }
+  // updateCommentLikes(i: number) {
+  //   let tempComments = this.TopComments.value[i].id;
+  //   console.log(tempComments);
+  //   // let tempId = tempComments[i]
+  // }
   // add(product: Item) {
   //   const newCart = [...this.cart.getValue(), product];
   //   this.cart.next(newCart);
