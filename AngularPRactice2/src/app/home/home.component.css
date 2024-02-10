@@ -123,16 +123,23 @@ background-color: #5cadd2;
 }
 
 .itemLike{
-  background-color: #888;
+height:60px;
+width:60px;
+position:absolute;
+top:calc(100% - 70px);
+left:calc(100% - 70px);
+text-align: center;
+align-content: center;
+vertical-align:middle;
 }
 
 .itemName:hover{
 background-color: #2d4049;
 }
 
-.itemLike:hover{
+/* .itemLike:hover{
   background-color: #2f873c;
-}
+} */
 
 
 .card{
@@ -141,6 +148,15 @@ margin-left:5px;
 padding:5px;
 border-radius:3px
 
+}
+
+.likeNumberContainer{
+position: absolute;
+    text-align: center;
+    /* height: 100%; */
+    width: 100%;
+    margin: auto;
+    top: 20px;
 }
 
 .cardShift{
@@ -167,5 +183,21 @@ ul{
 
   background-color: #5cadd2;
 
+
 }
 
+.heartContainer{
+  position:absolute;
+  height:100%;
+  width:100%;
+  left:0;
+  
+}
+
+.heart{
+  position:absolute;
+  height:100%;
+  width:100%;
+  left:0;
+
+}

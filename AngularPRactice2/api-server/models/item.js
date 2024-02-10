@@ -46,6 +46,11 @@ module.exports = function(sequelize, DataTypes) {
   modelLink:{ 
     type: DataTypes.STRING
   },
+
+  deleted:{
+    type:DataTypes.BOOLEAN,
+    default:0
+  }
   
 
   

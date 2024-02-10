@@ -1,7 +1,7 @@
 import { NgClass, NgIf } from '@angular/common';
 import {Component, Input, Output, EventEmitter } from '@angular/core';
 // import {RouterLink, RouterLinkActive, RouterOutlet} from ''
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet, Router } from '@angular/router';
 import { HomeService } from '../home.service';
 import { FormsModule } from '@angular/forms';
 @Component({
@@ -24,7 +24,7 @@ export class VelveteenHeaderComponent {
   loginModule: string = 'off';
   signupModule: string = 'off';
 
-  constructor(private homeSvc: HomeService) {}
+  constructor(private homeSvc: HomeService, private router:Router) {}
 
   public formSignUpUser: any = {
     email: 'jkjk',
@@ -47,6 +47,11 @@ export class VelveteenHeaderComponent {
     }
   }
 
+  reload(){
+    console.log("reloading")
+    window.location.reload();
+  }
+
   signUp(event: any) {
     event.preventDefault();
     console.log(this.formSignUpUser);
@@ -56,6 +61,7 @@ export class VelveteenHeaderComponent {
       username: this.formSignUpUser.username,
       points: this.formSignUpUser.points,
     });
+   
   }
   login(event: any) {
     event.preventDefault();
@@ -64,6 +70,11 @@ export class VelveteenHeaderComponent {
       username: this.formLoginUser.username,
       password: this.formLoginUser.password,
     });
+
+     
+
+
+    
   }
 
   signOut(event: any) {

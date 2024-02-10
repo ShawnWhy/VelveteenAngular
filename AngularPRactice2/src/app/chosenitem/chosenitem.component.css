@@ -11,3 +11,35 @@
     width:40%;
 
 }
+
+.itemCommentsContainer{
+    animation:commentsPullDown .5s both;
+    overflow-y:scroll;
+    height:300px;
+}
+
+@keyframes commentsPullDown {
+    0%{height:0px}
+
+    100%{height:300px}
+    
+}
+
+#imageRow{
+    width:100%;
+    padding:10px;
+    display:flex
+}
+
+#bidContainer{
+    width:100%;
+    padding:10px;
+    display:flex;
+    text-align:center;
+    animation: openBid .5s both
+}
+
+@keyframes openBid {
+    0%{width:0x}
+    100%{ width:100%}
+}

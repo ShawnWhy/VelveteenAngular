@@ -29,18 +29,18 @@ export class AppComponent implements AfterViewInit {
   ngAfterViewInit() {
     const canvas: HTMLCanvasElement = this.canvasRef.nativeElement;
     this.context = canvas.getContext('2d');
-    console.log(this.canvasRef.nativeElement.height)
-        console.log(this.canvasRef.nativeElement.width);
+    console.log(this.canvasRef.nativeElement.height);
+    console.log(this.canvasRef.nativeElement.width);
 
-    console.log(this.context)
+    console.log(this.context);
     if (!this.context) {
       throw new Error('Unable to obtain 2D rendering context');
     }
 
-        this.sketch(
-          this.canvasRef.nativeElement.width/2,
-          this.canvasRef.nativeElement.height/2
-        );
+    this.sketch(
+      this.canvasRef.nativeElement.width / 2,
+      this.canvasRef.nativeElement.height / 2
+    );
     this.startAnimating(60);
   }
 
@@ -53,34 +53,6 @@ export class AppComponent implements AfterViewInit {
     animate: true,
   };
   private i: number = 0;
-  // animate() {
-  //   // Clear canvas
-
-  //   this.context.clearRect(
-  //     0,
-  //     0,
-  //     this.canvasRef.nativeElement.width,
-  //     this.canvasRef.nativeElement.height
-  //   );
-
-  //   // Draw your animated elements here
-  //   // Example:
-  //   this.context.fillStyle = '#FF0000';
-  //   this.i++;
-  //   this.context.fillRect(0, 0, this.i, 
-  //     this.canvasRef.nativeElement.height
-  //     );
-  //   if (this.i > 
-  //     this.canvasRef.nativeElement.width
-  //     ) {
-  //     this.i = 0;
-  //   }
-
-  //   // Update animation state or draw new elements
-
-  //   // Call next animation frame
-  //   requestAnimationFrame(() => this.tick());
-  // }
 
   modalState: string = 'off';
   title = 'The Velveteen Exchange';
@@ -128,9 +100,9 @@ export class AppComponent implements AfterViewInit {
         this.agents[i].update();
         this.agents[i].draw(this.context);
         this.agents[i].bounce(
-          this.canvasRef.nativeElement.width/2,
+          this.canvasRef.nativeElement.width / 2,
 
-          this.canvasRef.nativeElement.height/2
+          this.canvasRef.nativeElement.height / 2
         );
       }
     }
@@ -163,10 +135,9 @@ export class AppComponent implements AfterViewInit {
       this.agents.push(new Agent(x, y, color));
     }
   }
+
   ngOnInit() {
     console.log('home');
-
-
 
     this.HomeSvc.getChosenItem().subscribe((item) => {
       this.chosenItem = item;
@@ -191,8 +162,6 @@ export class AppComponent implements AfterViewInit {
     });
   }
 }
-
-
 
 // import { Component, ViewChild, ElementRef } from '@angular/core';
 

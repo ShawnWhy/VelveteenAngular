@@ -183,6 +183,7 @@ export class HomeService {
         })
       )
       .subscribe((response: any) => {
+        window.location.reload();
         console.log(
           'Congratulations, my love! Your data was successfully submitted:',
           response
@@ -205,6 +206,7 @@ export class HomeService {
         })
       )
       .subscribe((response: any) => {
+        window.location.reload();
         console.log(
           'Congratulations, my love! Your data was successfully submitted:',
           response
@@ -261,6 +263,7 @@ export class HomeService {
         })
       )
       .subscribe((response: any) => {
+        window.location.reload();
         console.log(
           'Congratulations, my love! Your data was successfully submitted:',
           response

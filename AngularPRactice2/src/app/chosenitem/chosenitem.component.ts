@@ -18,23 +18,31 @@ export class ChosenitemComponent {
   public itemComments: any[] = [];
   public bid: number = 0;
 
-
-  moveItemLeft(){
-        let tempItemImage = this.chosenItem.imageNumber;
-        tempItemImage--;
-        if (tempItemImage < 0) {
-          tempItemImage = 2;
-        }
-        this.chosenItem.imageNumber = tempItemImage;
-
-  }
-  moveItemRight(){
-    let tempItemImage = this.chosenItem.imageNumber
-    tempItemImage++;
-    if(tempItemImage>2){
-      tempItemImage=0
+  moveItemLeft() {
+    let tempItemImage = this.chosenItem.imageNumber;
+    tempItemImage--;
+    if (tempItemImage < 0) {
+      tempItemImage = 2;
     }
-    this.chosenItem.imageNumber=tempItemImage
+    this.chosenItem.imageNumber = tempItemImage;
+  }
+
+  public bidOpen: boolean = false;
+
+  openBid() {
+    if (this.bidOpen) {
+      this.bidOpen = false;
+    } else {
+      this.bidOpen = true;
+    }
+  }
+  moveItemRight() {
+    let tempItemImage = this.chosenItem.imageNumber;
+    tempItemImage++;
+    if (tempItemImage > 2) {
+      tempItemImage = 0;
+    }
+    this.chosenItem.imageNumber = tempItemImage;
   }
   submitLike(
     like: number,
@@ -43,9 +51,9 @@ export class ChosenitemComponent {
     myUserId: number,
     myPoints: number
   ) {
-    if(itemUserId ==0){
-      console.log("this item is created by the guest user")
-    return;
+    if (itemUserId == 0) {
+      console.log('this item is created by the guest user');
+      return;
     }
     //update likes on item
     this.homeSvc.submitLike(
@@ -56,7 +64,7 @@ export class ChosenitemComponent {
       this.currentUser.points - 1
     );
   }
-  public submitComment(e:any) {
+  public submitComment(e: any) {
     e.stopPropagation();
     e.preventDefault();
     let newComment = {
@@ -66,13 +74,14 @@ export class ChosenitemComponent {
       votes: 0,
       userId: this.currentUser.id,
     };
-    console.log(newComment)
+    console.log(newComment);
+    this.itemComments.push(newComment);
     this.ChosSvc.submitComment(newComment);
   }
 
   public submitBid() {
-    if(this.chosenItem.userId ==0){
-      console.log("either you are the user or the item is created by the user")
+    if (this.chosenItem.userId == 0) {
+      console.log('either you are the user or the item is created by the user');
       return;
     }
     this.ChosSvc.submitBid({
@@ -81,6 +90,14 @@ export class ChosenitemComponent {
       userName: this.currentUser.username,
       userId: this.currentUser.id,
     });
+  }
+  public commentsSwitch: boolean = false;
+  public turnComments() {
+    if (this.commentsSwitch) {
+      this.commentsSwitch = false;
+    } else {
+      this.commentsSwitch = true;
+    }
   }
   public turnoffModal(e: any) {
     console.log('turnoffmodal');
@@ -92,15 +109,21 @@ export class ChosenitemComponent {
     private ChosSvc: ChosenItemServiceService
   ) {}
 
-  public newComment:string = ''
+  public newComment: string = '';
 
   ngOnInit() {
     console.log('this.currentUser' + this.currentUser.username);
     console.log('this.chosenitem.id' + this.chosenItem.id);
+  }
+
+  openComments() {
+    this.turnComments();
+    console.log('sdsdsds');
     this.ChosSvc.getComments(this.chosenItem.id).subscribe((comments) => {
       this.itemComments = comments;
     });
   }
+
   // @Output() changeUserEvent = new EventEmitter<any>();
 
   // changeUser(value: string) {

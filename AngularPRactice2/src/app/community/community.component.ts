@@ -1,5 +1,5 @@
-import { ChangeDetectorRef,OnChanges, Component } from '@angular/core';
-import { Router} from '@angular/router';
+import { ChangeDetectorRef, OnChanges, Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { HomeService } from '../home.service';
 import { HttpClient } from '@angular/common/http';
@@ -25,9 +25,43 @@ export class CommunityComponent {
   currentUser: any = {};
   filter: string = '';
 
-  public itemPositions:any ={x:12, y:200}
+  public itemPositions: any = { x: 12, y: 200 };
 
   public userItemPositions: any[] = [];
+
+  submitDecoration(event: any) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log('submitting decoration');
+    let userId = this.currentUser.id;
+    let decoration = JSON.stringify({ decoration: this.userItemPositions });
+    let newDecoration = {
+      userId: userId,
+      decoration: decoration,
+    };
+    console.log('this is the new decoration');
+    console.log(newDecoration);
+
+    this.http
+      .put<any>('/api/create_decoration', newDecoration)
+      .pipe(
+        catchError((error: any) => {
+          console.log(
+            'Oops! Something went wrong signing up the user:',
+            error.message
+          );
+          return throwError(
+            'Oh, my dear, there was an error while submitting your data. Please try again later.'
+          );
+        })
+      )
+      .subscribe((response: any) => {
+        console.log(
+          'Congratulations, my love! Your data was successfully submitted:',
+          response
+        );
+      });
+  }
 
   getUserItems(userId: number) {
     console.log("getting the user's items");
@@ -50,8 +84,21 @@ export class CommunityComponent {
         next: (items) => {
           console.log(items);
           this.userItems = items;
-          for (let i = 0; i < items.length; i++) {
-            this.userItemPositions.push([i*20, i*20]);
+
+          if (this.userItemPositions.length == 0) {
+            console.log('nolength');
+            for (let i = 0; i < items.length; i++) {
+              this.userItemPositions.push([i * 20, i * 20]);
+            }
+          } else if (items.length > this.userItemPositions.length) {
+            console.log('short+++++++++++');
+            let extra = items.length - this.userItemPositions.length;
+
+            for (let i = 0; i < extra; i++) {
+              this.userItemPositions.push([i * 20, i * 20]);
+            }
+          } else {
+            return;
           }
         },
       });
@@ -60,36 +107,34 @@ export class CommunityComponent {
   public selectedCard: number | null = null;
 
   selectCard(index: number) {
-    console.log("clicked card")
-    console.log(index)
+    console.log('clicked card');
+    console.log(index);
     this.selectedCard = index;
   }
 
-  dropCard(event:any){
-    console.log("droppingcard")
-          console.log(event.target.id);
+  dropCard(event: any) {
+    console.log('droppingcard');
+    console.log(event.target.id);
 
-    if(event.target.id==="myTackBoard"){
-    this.selectedCard=null;
+    if (event.target.id === 'myTackBoard') {
+      this.selectedCard = null;
     }
-  
-}
+  }
   moveCard(event: MouseEvent) {
     //  this.changeDetectorRef.detectChanges();
-    console.log("movingcard")
-    console.log(this.selectedCard)
+    // console.log("movingcard")
+    // console.log(this.selectedCard)
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
-    console.log(mouseX)
-    console.log(mouseY)
-if(this.selectedCard !==null){
-    //  this.itemPositions.x= mouseX;
-    //  this.itemPositions.y = mouseY;
-    this.userItemPositions[this.selectedCard][0] = mouseX+10;
-    this.userItemPositions[this.selectedCard][1] = mouseY+10;
-    console.log(this.userItemPositions);
-
-}
+    // console.log(mouseX)
+    // console.log(mouseY)
+    if (this.selectedCard !== null) {
+      //  this.itemPositions.x= mouseX;
+      //  this.itemPositions.y = mouseY;
+      this.userItemPositions[this.selectedCard][0] = mouseX + 10;
+      this.userItemPositions[this.selectedCard][1] = mouseY + 10;
+      // console.log(this.userItemPositions);
+    }
 
     // Now you can use the mouseX and mouseY variables as you desire.
   }
@@ -110,6 +155,24 @@ if(this.selectedCard !==null){
     console.log('oninit communitry');
     this.route.params.subscribe((params) => {
       this.filter = params['filter'] ?? 'no params';
+    });
+
+    this.http.get<any>('/api/my_decoration/' + this.filter).subscribe({
+      next: (decoration) => {
+        console.log('only for decoration');
+        console.log(decoration);
+        if (!decoration.decoration) {
+          console.log('decoration has no ');
+          // return;
+        } else {
+          console.log('gotten stuff grom decoration');
+          let tempUserItemPositions = decoration;
+          console.log(tempUserItemPositions);
+          tempUserItemPositions = JSON.parse(tempUserItemPositions.decoration);
+          this.userItemPositions = tempUserItemPositions.decoration;
+          console.log(this.userItemPositions);
+        }
+      },
     });
 
     this.getUserItems(parseInt(this.filter));

@@ -18,3 +18,7 @@
 
   </li>
 </ul>
+<form     *ngIf="currentUser.id == filter"
+ >
+  <input (click)="submitDecoration($event)" type="submit" id="submitDecoration">
+</form>

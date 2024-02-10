@@ -5,6 +5,7 @@ import { AppComponent } from  './app.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common'
+import { NgModel } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common'
     // Component declarations go here
   ],
   imports: [
+    NgModel,
     BrowserModule,
     HttpClientModule,
     FormsModule,

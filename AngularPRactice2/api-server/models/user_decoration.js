@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
         // referencesKey:"id"
     },
     decoration: {
-      type: DataTypes.LONGTEXT,
+      type: DataTypes.TEXT,
       allowNull: false, 
   
       // references: "Item",
