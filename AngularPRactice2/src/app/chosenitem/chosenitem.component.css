@@ -44,4 +44,51 @@
     100%{ width:100%}
 }
 
-.welcomeToCommunity{
+ul{
+  list-style-type: none
+}
+@keyframes shiftCard{
+  0%{left:0px}
+  50%{left:30px; z-index:2}
+  100%{left:0px}
+
+}
+
+.commentList{
+  max-height:300px;
+  overflow-y: scroll;
+}
+
+.commentList li{
+  border-radius: 3px;
+}
+
+.commentList li:hover{
+
+  background-color: #5cadd2;
+
+
+}
+
+.commentList li.myComment:hover{
+
+  background-color: orange;
+
+
+}
+
+.userLink:hover{
+  background-color: orange;
+  color:white;
+}
+
+.userLink{
+  position:relative;  
+  top:5px;
+  margin-top:5px;
+  padding: 5px;
+    background-color: lightblue;
+    border-radius: 3px;
+    text-decoration: none;
+    color:black;
+}

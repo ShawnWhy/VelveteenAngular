@@ -24,8 +24,26 @@
 <div (click)="openComments()">Open Comments</div>
 <div class="itemCommentsContainer" *ngIf="commentsSwitch">
 <ul class="commentList">
-    <li class="commentArrayElement"  *ngFor="let comment of itemComments; let i = index" [attr.data-index]="i" [attr.userid]="comment.userId">
+    <!-- <li class="commentArrayElement"  *ngFor="let comment of itemComments; let i = index" [attr.data-index]="i" [attr.userid]="comment.userId">
          {{comment.comment.toString()}}
+    </li> -->
+
+
+    <li
+      *ngFor="let comment of itemComments; let i = index"
+      [attr.data-index]="i"
+      [attr.userid]="comment.userId"
+      [ngClass]="[comment.userId==currentUser.id ? 'myComment' : '']"
+
+    >
+      <a class="userLink" [routerLink]="['/community', comment.userId]"
+      [attr.userid]="comment.userName" target="_blank"> 
+   
+      {{ comment.userName.toString() }} : 
+      </a>
+        {{ comment.comment.toString() }}
+      <p (click)="currentUser.points > 0 && updateCommentLikes(i)"
+> {{ itemComments[i].votes.toString() }}</p>
     </li>
 </ul>
 <form (ngSubmit)="submitComment($event)">

@@ -122,7 +122,10 @@ export class HomeComponent {
     itemId: number,
     itemUserId: number
   ) {
+
+    
     this.heartClick(itemindex);
+    if(itemUserId !== this.currentUser.id){
     this.HomeSvc.setCurrentUser({
       username: this.currentUser.username,
       points: this.currentUser.points - 1,
@@ -141,6 +144,7 @@ export class HomeComponent {
       this.currentUser.points
     );
   }
+}
   changeUser(newName: any) {
     console.log('newname');
     console.log(newName);
@@ -213,6 +217,10 @@ export class HomeComponent {
   }
 
   updateCommentLikes(i: number) {
+    if(this.currentUser.id !== this.TopComments[i].userId){
+
+    
+    
     this.HomeSvc.setCurrentUser({
       username: this.currentUser.username,
       points: this.currentUser.points - 1,
@@ -230,4 +238,5 @@ export class HomeComponent {
       this.currentUser.points
     );
   }
+}
 }

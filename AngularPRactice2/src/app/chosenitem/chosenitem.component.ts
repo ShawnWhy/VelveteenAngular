@@ -4,11 +4,24 @@ import { HomeService } from '../home.service';
 import { ChosenItemServiceService } from './chosen-item-service.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+  Router,
+} from '@angular/router';
+
 
 @Component({
   selector: 'bot-chosenitem',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet,
+  ],
   templateUrl: './chosenitem.component.html',
   styleUrls: ['./chosenitem.component.css'],
 })
@@ -103,14 +116,32 @@ export class ChosenitemComponent {
     console.log('turnoffmodal');
     this.homeSvc.turnOffItemModal();
     this.commentsSwitch = false;
-
   }
 
   constructor(
     private homeSvc: HomeService,
     private ChosSvc: ChosenItemServiceService
   ) {}
+  updateCommentLikes(i: number) {
+    if (this.currentUser.id !== this.itemComments[i].userId) {
+      this.homeSvc.setCurrentUser({
+        username: this.currentUser.username,
+        points: this.currentUser.points - 1,
+        id: this.currentUser.id,
+      });
 
+      let tempComments: any[] = this.itemComments;
+      tempComments[i].votes += 1;
+      // this.homeSvc.setTopComments(tempComments);
+      // console.log("likedcomment" + i)
+
+      this.homeSvc.submitCommentVotes(
+        i,
+        this.currentUser.id,
+        this.currentUser.points
+      );
+    }
+  }
   public newComment: string = '';
 
   ngOnInit() {

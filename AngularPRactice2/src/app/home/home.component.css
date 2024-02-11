@@ -180,9 +180,20 @@ ul{
   overflow-y: scroll;
 }
 
+#topComments li{
+  border-radius: 3px;
+}
+
 #topComments li:hover{
 
   background-color: #5cadd2;
+
+
+}
+
+#topComments li.myComment:hover{
+
+  background-color: orange;
 
 
 }
@@ -201,4 +212,31 @@ ul{
   width:100%;
   left:0;
 
+}
+
+.userLink:hover{
+  background-color: orange;
+  color:white;
+}
+
+.userLink{
+  position:relative;  
+  top:5px;
+  margin-top:5px;
+  padding: 5px;
+    background-color: lightblue;
+    border-radius: 3px;
+    text-decoration: none;
+    color:black;
+}
+
+.shakeHeart{
+  animation: heartShake .5s both;
+}
+@keyframes heartShake {
+  0%{transform:translate(-5px)}
+  50%{transform:translate(5px)}
+  100%{transform:translate(0px)}  
+  /* 0%{transform:translate(0px)}
+  100%{} */
 }
