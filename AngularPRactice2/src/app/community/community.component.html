@@ -1,11 +1,109 @@
 
-<p>Welcome {{filter}} !!!!!</p>
+<h2  *ngIf="currentUser.id == filter" class="welcomeToCommunity">Welcome {{currentUser.username}} to your own space!</h2>
   <ul 
   
   (click)="dropCard($event)"
   
   (mousemove)="moveCard($event)" id="myTackBoard" style = "display:flex;min-width:100%; overflow:scroll; height:250px">
-  <li [ngStyle]="{'float':'left', 'width':'25%','min-width': '250px', 'border':'black solid 1px', 
+
+   <li
+   class = "card"
+      (mousein)="heartChangeColor(i)"
+      (mouseout)="heartChangeColor(i)"
+      *ngFor="let item of userItems; index as i"
+
+      [ngStyle]="{
+        float: 'left',
+        width: '25%',
+        'min-width': '250px',
+        border: 'black solid 1px',
+        top:userItemPositions[i][1] + 'px',
+        left:userItemPositions[i][0] + 'px'
+      }"
+      [attr.itemId]="i"
+      
+    >
+      <div class="itemName" (click)="setChosenItem(i)">{{ item.name }}</div>
+      <!-- {{this.heartTop[i]}} -->
+      <div
+
+              [ngStyle]="
+          {
+            transform: heartClickTrigger[i] ? 'translateY(-40px)' : '',
+            transition: heartClickTrigger[i]? '.5s' : ''
+          }
+        "
+
+        class="itemLike"
+        (click)="
+          currentUser.points > 0 &&
+            submitLike(i, item.likes, item.id, item.userId)
+        "
+      >
+        <!-- <div   style = "z-index:9999" *ngIf='heartTop[i]' class="heartContainer" >
+        <svg  class="heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 195 146.79"><defs>
+         <style>.cls-1{fill:#ff2058;}.cls-2{fill:none;stroke:#231f20;stroke-miterlimit:3.86;}.cls-4{fill:{{heartColors[0]}}}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M97.5,145.5c-10.48-25-62.22-36-84.77-64.3a48.5,48.5,0,1,1,79-55.2c4.1,10.32,7.16,10.06,11.48.17A49.14,49.14,0,0,1,117,10.11,48.53,48.53,0,0,1,182.47,81C160,109.43,108,120.51,97.5,145.5Z"/><path class="cls-2" d="M97.5,145.5c-10.48-25-62.22-36-84.77-64.3a48.5,48.5,0,1,1,79-55.2c4.1,10.32,7.16,10.06,11.48.17A49.14,49.14,0,0,1,117,10.11,48.53,48.53,0,0,1,182.47,81C160,109.43,108,120.51,97.5,145.5Z"/><path class="cls-4" d="M97.5,145.5c-10.48-25-62.22-36-84.77-64.3a48.5,48.5,0,1,1,79-55.2c4.1,10.32,7.16,10.06,11.48.17A49.14,49.14,0,0,1,117,10.11,48.53,48.53,0,0,1,182.47,81C160,109.43,108,120.51,97.5,145.5Z"/></g></g></svg>
+               </div> -->
+
+        <!-- [ngStyle]="myBooleanVar && {'color': 'red'}" -->
+
+        <svg
+                [ngStyle]="
+          {
+            transform: heartClickTrigger[i] ? 'scale(3)' : '',
+            opacity: heartClickTrigger[i] ? '.2' : '',
+            transition:heartClickTrigger[i] ? 'transform.5s, opacity .5s' :''
+          }
+        "
+          class="heart"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 195 146.79"
+        >
+          <defs>
+            <style>
+              .cls-1 {
+                fill: #ff2058;
+              }
+              .cls-2 {
+                fill: none;
+                stroke: #231f20;
+                stroke-miterlimit: 3.86;
+              }
+              .cls-3 {
+                transition: fill;
+                transition-duration: 0.5s;
+              }
+            </style>
+          </defs>
+          <g id="Layer_2" data-name="Layer 2">
+            <g id="Layer_1-2" data-name="Layer 1">
+              <path
+                class="cls-1"
+                d="M97.5,145.5c-10.48-25-62.22-36-84.77-64.3a48.5,48.5,0,1,1,79-55.2c4.1,10.32,7.16,10.06,11.48.17A49.14,49.14,0,0,1,117,10.11,48.53,48.53,0,0,1,182.47,81C160,109.43,108,120.51,97.5,145.5Z"
+              />
+              <path
+                class="cls-2"
+                d="M97.5,145.5c-10.48-25-62.22-36-84.77-64.3a48.5,48.5,0,1,1,79-55.2c4.1,10.32,7.16,10.06,11.48.17A49.14,49.14,0,0,1,117,10.11,48.53,48.53,0,0,1,182.47,81C160,109.43,108,120.51,97.5,145.5Z"
+              />
+              <path
+                class="cls-3"
+                style="fill:{{ heartColors[i] }}"
+                d="M97.5,145.5c-10.48-25-62.22-36-84.77-64.3a48.5,48.5,0,1,1,79-55.2c4.1,10.32,7.16,10.06,11.48.17A49.14,49.14,0,0,1,117,10.11,48.53,48.53,0,0,1,182.47,81C160,109.43,108,120.51,97.5,145.5Z"
+              />
+            </g>
+          </g>
+        </svg>
+        <div class="likeNumberContainer">{{ item.likes.toString() }}</div>
+      </div>
+      <div
+      (click)="selectCard(i)"
+        [ngStyle]="{
+          'min-height': '150px',
+          'background-image': 'url(' + item.imageUrl1.toString() + ')'
+        }"
+      ></div>
+    </li>
+  <!-- <li [ngStyle]="{'float':'left', 'width':'25%','min-width': '250px', 'border':'black solid 1px', 
   'top':userItemPositions[i][1] + 'px',
   'left':userItemPositions[i][0] + 'px'}" 
   
@@ -16,9 +114,10 @@
 
 
 
-  </li>
+  </li> -->
 </ul>
-<form     *ngIf="currentUser.id == filter"
+<form style = "position: relative;
+    top: -150px;"    *ngIf="currentUser.id == filter"
  >
-  <input (click)="submitDecoration($event)" type="submit" id="submitDecoration">
+  <input (click)="submitDecoration($event)" type="submit" id="submitDecoration" value = "Submit Cards Arrangement">
 </form>

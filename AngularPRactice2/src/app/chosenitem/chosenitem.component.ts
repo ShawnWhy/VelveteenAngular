@@ -102,6 +102,8 @@ export class ChosenitemComponent {
   public turnoffModal(e: any) {
     console.log('turnoffmodal');
     this.homeSvc.turnOffItemModal();
+    this.commentsSwitch = false;
+
   }
 
   constructor(

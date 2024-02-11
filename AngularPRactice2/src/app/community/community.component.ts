@@ -25,6 +25,78 @@ export class CommunityComponent {
   currentUser: any = {};
   filter: string = '';
 
+  public heartTop: boolean[] = [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+  ];
+
+  public heartClickTrigger: boolean[] = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
+
+  newTitleColors2: string[] = [
+    'orange',
+    'rgb(244, 170, 42)',
+    'rgb(255, 10, 247)',
+    'rgb(204, 255, 51)',
+    'rgb(242, 115, 208)',
+    'rgb(255, 51, 0)',
+  ];
+
+  heartColors: string[] = [
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+  ];
+
+  heartChangeColor(i: number) {
+    // console.log('mouseover' + i);
+    // if (this.heartTop[i] == true) {
+    //   this.heartTop[i] = false;
+    // } else {
+    //   this.heartTop[i] = true;
+    // }
+    // console.log(this.heartTop);
+    let randomNumber = Math.floor(Math.random() * this.newTitleColors2.length);
+    var titleColor = this.newTitleColors2[randomNumber];
+    this.heartColors[i] = titleColor;
+  }
+  public heartClick(i: number) {
+    console.log('heart click');
+    this.heartClickTrigger[i] = true;
+    setTimeout(() => {
+      this.heartClickTrigger[i] = false;
+    }, 450);
+  }
+
   public itemPositions: any = { x: 12, y: 200 };
 
   public userItemPositions: any[] = [];
@@ -63,6 +135,7 @@ export class CommunityComponent {
       });
   }
 
+
   getUserItems(userId: number) {
     console.log("getting the user's items");
     console.log(userId);
@@ -85,6 +158,15 @@ export class CommunityComponent {
           console.log(items);
           this.userItems = items;
 
+              this.heartClickTrigger = [];
+              this.heartColors = [];
+              this.heartTop = [];
+              for (let i = 0; i < items.length; i++) {
+                this.heartClickTrigger.push(false);
+                this.heartTop.push(false);
+                this.heartColors.push('orange');
+              }
+
           if (this.userItemPositions.length == 0) {
             console.log('nolength');
             for (let i = 0; i < items.length; i++) {
@@ -97,6 +179,7 @@ export class CommunityComponent {
             for (let i = 0; i < extra; i++) {
               this.userItemPositions.push([i * 20, i * 20]);
             }
+        
           } else {
             return;
           }
@@ -192,6 +275,7 @@ export class CommunityComponent {
     itemId: number,
     itemUserId: number
   ) {
+    this.heartClick(itemindex);
     this.homeSV.setCurrentUser({
       username: this.currentUser.username,
       points: this.currentUser.points - 1,

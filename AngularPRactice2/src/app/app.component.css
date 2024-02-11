@@ -37,6 +37,7 @@ app-item-submit{
     margin: 2.5%;
     margin-top: 8px;
     border-radius: 12px;
+    max-height: 700px;
 }
 /* bot-community{
 

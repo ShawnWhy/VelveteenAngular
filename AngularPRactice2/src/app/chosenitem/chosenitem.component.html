@@ -1,5 +1,3 @@
-<p>chosen Item</p>
-
 <div class ="closeModal" (click)="turnoffModal($event)">X</div>
 <div id="innerChosenItem">
 {{chosenItem.name}}</div><div>
@@ -18,7 +16,7 @@
 <div id = "imageRow">
 <div id="itemLeft" (click)="moveItemLeft()"><</div>
 
- <div class="chosenImage" [ngStyle]="{ 'min-height': '150px','background-image': 'url(' + chosenItem.imageArray[chosenItem.imageNumber] + ')' }"></div>
+ <div class="chosenImage" [ngStyle]="{ 'min-height': '560px','background-image': 'url(' + chosenItem.imageArray[chosenItem.imageNumber] + ')' }"></div>
  <div id="itemRight" (click)="moveItemRight()">></div>
 
 </div>

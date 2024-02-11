@@ -102,10 +102,7 @@ export class HomeComponent {
       this.heartClickTrigger[i] = false;
     }, 450);
   }
-  public heartParentClickStyle: string =
-    'transform:translateY(-40px); transition:transform .5s';
-  public heartClickStyle: string =
-    '{transform:scale(3);opacity:.2; transition:transform .5s, opacity .5s;}';
+  
 
   heartChangeColor(i: number) {
     // console.log('mouseover' + i);
@@ -130,7 +127,7 @@ export class HomeComponent {
       username: this.currentUser.username,
       points: this.currentUser.points - 1,
       id: this.currentUser.id,
-    });
+    }); 
 
     let tempFav: any[] = this.FavItems;
     tempFav[itemindex].likes = like + 1;
