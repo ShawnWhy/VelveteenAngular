@@ -8,6 +8,12 @@ import { Item } from '../item.model';
 import { CommonModule } from '@angular/common';
 import { ItemSubmitComponent } from '../item-submit/item-submit.component';
 import { NgClass, NgIf } from '@angular/common';
+import {
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+  Router,
+} from '@angular/router';
 
 
 @Component({
@@ -15,7 +21,16 @@ import { NgClass, NgIf } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone: true,
-  imports: [ItemSubmitComponent, CommonModule, NgIf, NgClass],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet,
+
+    ItemSubmitComponent,
+    CommonModule,
+    NgIf,
+    NgClass,
+  ],
 })
 export class HomeComponent {
   @Input() FavItems: any[] = [];
@@ -42,16 +57,16 @@ export class HomeComponent {
   ];
 
   public heartClickTrigger: boolean[] = [
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
   ];
 
   newTitleColors2: string[] = [
@@ -80,14 +95,17 @@ export class HomeComponent {
     'orange',
   ];
 
-  public heartClick(i:number){
-    console.log("heart click")
-    this.heartClickTrigger[i]=true;
+  public heartClick(i: number) {
+    console.log('heart click');
+    this.heartClickTrigger[i] = true;
+    setTimeout(() => {
+      this.heartClickTrigger[i] = false;
+    }, 450);
   }
   public heartParentClickStyle: string =
-    'transform:translateY(-40px); trnsition:transform .5s';
+    'transform:translateY(-40px); transition:transform .5s';
   public heartClickStyle: string =
-    'transform:scale(3);opacity:.2; transition:transform .5s, opacity .5s;';
+    '{transform:scale(3);opacity:.2; transition:transform .5s, opacity .5s;}';
 
   heartChangeColor(i: number) {
     // console.log('mouseover' + i);
