@@ -1,6 +1,6 @@
-<canvas #myCanvas 
-height="600px" 
-width="1000px"></canvas>
+<canvas (window:resize)="onResize($event)" #myCanvas 
+height="{{backGroundSize.height}}" 
+width="{{backGroundSize.width}}" ></canvas>
 <bot-chosenitem [ngClass]="[modalState==='on' ? 'modalOuter' : 'invisibleDiv' ]"[chosenItem]="chosenItem"[currentUser]="currentUser"></bot-chosenitem>
 
 <app-velveteen-header [currentUser]="currentUser"></app-velveteen-header>

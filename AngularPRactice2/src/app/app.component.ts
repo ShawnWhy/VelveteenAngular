@@ -26,6 +26,22 @@ export class AppComponent implements AfterViewInit {
   canvasRef: any;
   public context: any;
 
+  public backGroundSize:any ={
+    height:800,
+    width:1000
+  };
+
+  onResize(e:any){
+    console.log(e.target)
+      console.log(e.target.innerWidth);
+      this.backGroundSize.height = e.target.innerHeight+300;
+      this.backGroundSize.width= e.target.innerWidth
+
+
+    
+
+  }
+
   ngAfterViewInit() {
     const canvas: HTMLCanvasElement = this.canvasRef.nativeElement;
     this.context = canvas.getContext('2d');
