@@ -17,8 +17,6 @@
   <div class="loginModuleInner">
     <form (ngSubmit)="login($event)">
       login
-      <input [(ngModel)]="formLoginUser.email"name = "loginEmail" id="loginEmail" typ="text" placeholder="username" />
-
       <input [(ngModel)]="formLoginUser.username" name = "loginName" id="loginName" typ="text" placeholder="username" />
       <input [(ngModel)]="formLoginUser.password" name = "loginPass" id="loginPass" type="password" placeholder="password" />
       <input type="submit" />

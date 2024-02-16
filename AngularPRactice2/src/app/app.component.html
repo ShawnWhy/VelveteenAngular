@@ -7,7 +7,6 @@ width="{{backGroundSize.width}}" ></canvas>
 <div id = "pageContainer" >
 <router-outlet></router-outlet>
 </div>
-<app-item-submit style="display: block;
-    width: 20%;" (changeUserEvent)="changeUser($event)" [currentUser]="currentUser" ></app-item-submit>
+<app-item-submit  (changeUserEvent)="changeUser($event)" [currentUser]="currentUser" ></app-item-submit>
 <!-- <bot-home [FavItems]="FavItems" [TopComments]="TopComments" [currentUser]="currentUser" ></bot-home> -->
 

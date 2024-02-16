@@ -108,7 +108,6 @@
       [attr.userid]="comment.userId"
       [ngClass]="[comment.userId==currentUser.id ? 'myComment' : '']"
 
-      (click)="currentUser.points > 0 && updateCommentLikes(i)"
     >
       <a   class="userLink" [routerLink]="['/community', comment.userId]"
       [attr.userid]="comment.username"> 
@@ -116,7 +115,8 @@
       {{ comment.userName.toString() }} : 
       </a>
         {{ comment.comment.toString() }}
-      <p>{{ TopComments[i].votes.toString() }}</p>
+      <p class="commentVotes"       (click)="currentUser.points > 0 && updateCommentLikes(i)"
+>Votes: {{ TopComments[i].votes.toString() }}</p>
     </li>
   </ul>
 </div>

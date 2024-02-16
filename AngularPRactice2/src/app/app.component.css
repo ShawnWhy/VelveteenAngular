@@ -28,6 +28,8 @@ app-item-submit{
     min-height: 400px;
 }
 
+
+
 #pageContainer{
     width: 70%;
     /* display: block; */
@@ -68,5 +70,25 @@ canvas{
     padding: 0 ! important;
     left: 0px ! important;
     top: 0 ! important;
+
+}
+
+@media screen and (max-width: 880px){
+
+app-item-submit{
+
+    width: calc(100% - 20px);
+    height:200px;
+    position:relative;
+    margin:unset;
+}
+
+#pageContainer{
+      width:100%;
+       position:relative;
+    margin:unset ! important;
+    float:unset;
+
+}
 
 }

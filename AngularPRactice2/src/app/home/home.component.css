@@ -182,18 +182,23 @@ ul{
 
 #topComments li{
   border-radius: 3px;
+  position:relative;
+  top:20px;
 }
 
 #topComments li:hover{
 
   background-color: #5cadd2;
+  color:white;
 
 
 }
 
+
 #topComments li.myComment:hover{
 
   background-color: orange;
+    color:white;
 
 
 }
@@ -221,8 +226,8 @@ ul{
 
 .userLink{
   position:relative;  
-  top:5px;
-  margin-top:5px;
+  /* top:5px;
+  margin-top:5px; */
   padding: 5px;
     background-color: lightblue;
     border-radius: 3px;
@@ -240,3 +245,28 @@ ul{
   /* 0%{transform:translate(0px)}
   100%{} */
 }
+
+.userLink{
+
+  position:relative;
+  top:-5px;
+  left:-5px;
+}
+.commentVotes{
+  padding:5px;
+}
+.commentVotes:hover{
+  background-color: pink;
+
+  
+}
+
+@media screen and (min-width: 880px){
+
+
+}
+/* app-item-submit */
+
+/* position: absolute;
+    top: 592px;
+    width: 100%; */

@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { HomeService } from '../home.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { DoCheck } from '@angular/core';
+
 
 import {
   Observable,
@@ -20,11 +22,13 @@ import {
   templateUrl: './community.component.html',
   styleUrls: ['./community.component.css'],
 })
-export class CommunityComponent {
+export class CommunityComponent{
   public userItems: any[] = [];
   currentUser: any = {};
   filter: string = '';
 
+
+  
   public heartTop: boolean[] = [
     true,
     true,
@@ -90,7 +94,7 @@ export class CommunityComponent {
     this.heartColors[i] = titleColor;
   }
   public heartClick(i: number) {
-    console.log('heart click');
+    // console.log('heart click');
     this.heartClickTrigger[i] = true;
     setTimeout(() => {
       this.heartClickTrigger[i] = false;
@@ -104,15 +108,15 @@ export class CommunityComponent {
   submitDecoration(event: any) {
     event.preventDefault();
     event.stopPropagation();
-    console.log('submitting decoration');
+    // console.log('submitting decoration');
     let userId = this.currentUser.id;
     let decoration = JSON.stringify({ decoration: this.userItemPositions });
     let newDecoration = {
       userId: userId,
       decoration: decoration,
     };
-    console.log('this is the new decoration');
-    console.log(newDecoration);
+    // console.log('this is the new decoration');
+    // console.log(newDecoration);
 
     this.http
       .put<any>('/api/create_decoration', newDecoration)
@@ -135,6 +139,36 @@ export class CommunityComponent {
       });
   }
 
+  initialfunction(){
+    this.homeSV.getCurrentUser().subscribe((user) => {
+      //  console.log(user);
+      //  console.log('comminity page');
+      this.currentUser = user;
+    });
+    // this.filter=this.route.snapshot.params['filter'];
+    //  console.log('oninit communitry');
+
+
+    this.http.get<any>('/api/my_decoration/' + this.filter).subscribe({
+      next: (decoration) => {
+         console.log('only for decoration');
+        //  console.log(decoration);
+        if (!decoration.decoration) {
+          console.log('decoration has no ');
+          // return;
+        } else {
+          console.log('gotten stuff grom decoration');
+          let tempUserItemPositions = decoration;
+          //  console.log(tempUserItemPositions);
+          tempUserItemPositions = JSON.parse(tempUserItemPositions.decoration);
+          this.userItemPositions = tempUserItemPositions.decoration;
+          //  console.log(this.userItemPositions);
+        }
+      },
+    });
+
+    this.getUserItems(parseInt(this.filter));
+  }
 
   getUserItems(userId: number) {
     console.log("getting the user's items");
@@ -155,17 +189,17 @@ export class CommunityComponent {
       // )
       .subscribe({
         next: (items) => {
-          console.log(items);
+          // console.log(items);
           this.userItems = items;
 
-              this.heartClickTrigger = [];
-              this.heartColors = [];
-              this.heartTop = [];
-              for (let i = 0; i < items.length; i++) {
-                this.heartClickTrigger.push(false);
-                this.heartTop.push(false);
-                this.heartColors.push('orange');
-              }
+          this.heartClickTrigger = [];
+          this.heartColors = [];
+          this.heartTop = [];
+          for (let i = 0; i < items.length; i++) {
+            this.heartClickTrigger.push(false);
+            this.heartTop.push(false);
+            this.heartColors.push('orange');
+          }
 
           if (this.userItemPositions.length == 0) {
             console.log('nolength');
@@ -179,7 +213,6 @@ export class CommunityComponent {
             for (let i = 0; i < extra; i++) {
               this.userItemPositions.push([i * 20, i * 20]);
             }
-        
           } else {
             return;
           }
@@ -190,14 +223,14 @@ export class CommunityComponent {
   public selectedCard: number | null = null;
 
   selectCard(index: number) {
-    console.log('clicked card');
-    console.log(index);
+    // console.log('clicked card');
+    // console.log(index);
     this.selectedCard = index;
   }
 
   dropCard(event: any) {
-    console.log('droppingcard');
-    console.log(event.target.id);
+    // console.log('droppingcard');
+    // console.log(event.target.id);
 
     if (event.target.id === 'myTackBoard') {
       this.selectedCard = null;
@@ -223,48 +256,22 @@ export class CommunityComponent {
   }
 
   constructor(
-    private changeDetectorRef: ChangeDetectorRef,
+    // private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private homeSV: HomeService,
     private http: HttpClient
   ) {}
   ngOnInit() {
-    this.homeSV.getCurrentUser().subscribe((user) => {
-      console.log(user);
-      console.log('comminity page');
-      this.currentUser = user;
-    });
-    // this.filter=this.route.snapshot.params['filter'];
-    console.log('oninit communitry');
     this.route.params.subscribe((params) => {
-      this.filter = params['filter'] ?? 'no params';
+      console.log(params['filter']);
+      if (params['filter'] !== this.filter) {
+        this.filter = params['filter'] ?? 'no params';
+        this.initialfunction()
+      }
     });
-
-    this.http.get<any>('/api/my_decoration/' + this.filter).subscribe({
-      next: (decoration) => {
-        console.log('only for decoration');
-        console.log(decoration);
-        if (!decoration.decoration) {
-          console.log('decoration has no ');
-          // return;
-        } else {
-          console.log('gotten stuff grom decoration');
-          let tempUserItemPositions = decoration;
-          console.log(tempUserItemPositions);
-          tempUserItemPositions = JSON.parse(tempUserItemPositions.decoration);
-          this.userItemPositions = tempUserItemPositions.decoration;
-          console.log(this.userItemPositions);
-        }
-      },
-    });
-
-    this.getUserItems(parseInt(this.filter));
   }
 
   setChosenItem(number: number) {
-    console.log('setting chosen Item ');
-    console.log(number);
-    console.log(this.userItems[number]);
     this.homeSV.turnOnItemModal();
     this.homeSV.setChosenItem(this.userItems[number]);
   }
@@ -295,3 +302,5 @@ export class CommunityComponent {
     );
   }
 }
+
+// 

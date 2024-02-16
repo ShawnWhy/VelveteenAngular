@@ -1,0 +1,13 @@
+
+input.userinput{
+    width:100%;
+    
+}
+textarea{
+        width:100%;
+
+}
+
+form{
+    display:flex
+}
