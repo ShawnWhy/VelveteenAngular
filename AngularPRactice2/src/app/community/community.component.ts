@@ -5,6 +5,7 @@ import { HomeService } from '../home.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { DoCheck } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 
 import {
@@ -18,17 +19,15 @@ import {
 @Component({
   selector: 'bot-community',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './community.component.html',
   styleUrls: ['./community.component.css'],
 })
-export class CommunityComponent{
+export class CommunityComponent {
   public userItems: any[] = [];
   currentUser: any = {};
   filter: string = '';
 
-
-  
   public heartTop: boolean[] = [
     true,
     true,
@@ -103,6 +102,31 @@ export class CommunityComponent{
 
   public itemPositions: any = { x: 12, y: 200 };
 
+  public userItemColors: any[] = [
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+    'orange',
+    ,
+    'orange',
+    ,
+    'orange',
+    ,
+    'orange',
+    ,
+    'orange',
+    ,
+    'orange',
+    ,
+    'orange',
+    ,
+    'orange',
+    ,
+    'orange',
+    ,
+    'orange',
+  ];
   public userItemPositions: any[] = [];
 
   submitDecoration(event: any) {
@@ -111,9 +135,12 @@ export class CommunityComponent{
     // console.log('submitting decoration');
     let userId = this.currentUser.id;
     let decoration = JSON.stringify({ decoration: this.userItemPositions });
+    let colors = JSON.stringify({ colors: this.userItemColors });
+
     let newDecoration = {
       userId: userId,
       decoration: decoration,
+      colors: colors,
     };
     // console.log('this is the new decoration');
     // console.log(newDecoration);
@@ -139,7 +166,7 @@ export class CommunityComponent{
       });
   }
 
-  initialfunction(){
+  initialfunction() {
     this.homeSV.getCurrentUser().subscribe((user) => {
       //  console.log(user);
       //  console.log('comminity page');
@@ -148,10 +175,9 @@ export class CommunityComponent{
     // this.filter=this.route.snapshot.params['filter'];
     //  console.log('oninit communitry');
 
-
     this.http.get<any>('/api/my_decoration/' + this.filter).subscribe({
       next: (decoration) => {
-         console.log('only for decoration');
+        console.log('only for decoration');
         //  console.log(decoration);
         if (!decoration.decoration) {
           console.log('decoration has no ');
@@ -160,9 +186,19 @@ export class CommunityComponent{
           console.log('gotten stuff grom decoration');
           let tempUserItemPositions = decoration;
           //  console.log(tempUserItemPositions);
-          tempUserItemPositions = JSON.parse(tempUserItemPositions.decoration);
-          this.userItemPositions = tempUserItemPositions.decoration;
-          //  console.log(this.userItemPositions);
+          let tempDecorations = JSON.parse(tempUserItemPositions.decoration);
+          this.userItemPositions = tempDecorations.decoration;
+          if(!decoration.colors){
+            console.log("nocolors")
+
+          }
+          else{
+                let tempUserColors = JSON.parse(tempUserItemPositions.colors);
+                this.userItemColors = tempUserColors.colors;
+                console.log(this.userItemColors);
+
+          }
+      
         }
       },
     });
@@ -203,8 +239,10 @@ export class CommunityComponent{
 
           if (this.userItemPositions.length == 0) {
             console.log('nolength');
+            this.userItemColors = [];
             for (let i = 0; i < items.length; i++) {
               this.userItemPositions.push([i * 20, i * 20]);
+              this.userItemColors.push('#FFFFFF');
             }
           } else if (items.length > this.userItemPositions.length) {
             console.log('short+++++++++++');
@@ -212,6 +250,7 @@ export class CommunityComponent{
 
             for (let i = 0; i < extra; i++) {
               this.userItemPositions.push([i * 20, i * 20]);
+              this.userItemColors.push('#FFFFFF');
             }
           } else {
             return;
@@ -261,12 +300,15 @@ export class CommunityComponent{
     private homeSV: HomeService,
     private http: HttpClient
   ) {}
+
+  public color: string = '#FFFFFF';
+
   ngOnInit() {
     this.route.params.subscribe((params) => {
       console.log(params['filter']);
       if (params['filter'] !== this.filter) {
         this.filter = params['filter'] ?? 'no params';
-        this.initialfunction()
+        this.initialfunction();
       }
     });
   }

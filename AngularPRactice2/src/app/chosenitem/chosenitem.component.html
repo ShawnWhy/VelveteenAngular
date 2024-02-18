@@ -1,27 +1,31 @@
-<div class ="closeModal" (click)="turnoffModal($event)">X</div>
+<div class ="closeModal XoutButton" (click)="turnoffModal($event)">X</div>
 <div id="innerChosenItem">
 {{chosenItem.name}}</div><div>
-<div></div><div> Highest Big: {{chosenItem.highestBid}}</div><div id="openBid" (click)="openBid()">Start Bidding</div></div>
+
+<div id = "itemStory">
+{{chosenItem.itemStory}}
+</div>
+<div id = "imageRow">
+  <div id = "imageRowInner">
+<div id="itemLeft" (click)="moveItemLeft()">
+  <div><</div></div>
+
+ <div class="chosenImage" [ngStyle]="{ 'min-height': '560px','background-image': 'url(' + chosenItem.imageArray[chosenItem.imageNumber] + ')' }"></div>
+ <div id="itemRight" (click)="moveItemRight()"><div class="arrow">></div></div>
+</div>
+</div>
+<div id="bidDisplay"> Highest Bid: {{chosenItem.highestBid}}</div>
+<div id="openBid" (click)="openBid()">Start Bidding</div></div>
 <div id="bidContainer" *ngIf ="bidOpen">
-<form (ngSubmit)="submitBid()"> 
+<form id = "bidForm" (ngSubmit)="submitBid()"> 
 <input type="number" placeholder={{chosenItem.highestBid}} [(ngModel)]="bid" name = "bidValue"><input type="submit" >
 
 </form >
 
 </div>
 
-<div>
-{{chosenItem.itemStory}}
-</div>
-<div id = "imageRow">
-<div id="itemLeft" (click)="moveItemLeft()"><</div>
 
- <div class="chosenImage" [ngStyle]="{ 'min-height': '560px','background-image': 'url(' + chosenItem.imageArray[chosenItem.imageNumber] + ')' }"></div>
- <div id="itemRight" (click)="moveItemRight()">></div>
-
-</div>
-
-<div (click)="openComments()">Open Comments</div>
+<div id="openComments" (click)="openComments()">Open Comments</div>
 <div class="itemCommentsContainer" *ngIf="commentsSwitch">
 <ul class="commentList">
     <!-- <li class="commentArrayElement"  *ngFor="let comment of itemComments; let i = index" [attr.data-index]="i" [attr.userid]="comment.userId">

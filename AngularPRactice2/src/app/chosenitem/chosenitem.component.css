@@ -2,6 +2,14 @@
     background-color:blue;
 }
 
+#innerChosenItem{
+  text-align: center;
+    font-size: 20px;
+    font-weight: bolder;
+    font-family: sans-serif;
+
+}
+
 .chosenImage{
 
     background-repeat: no-repeat;
@@ -28,14 +36,58 @@
 #imageRow{
     width:100%;
     padding:10px;
-    display:flex
+    display:flex;
+    text-align: center;
 }
 
+#imageRowInner{
+  width:60%;
+  display:flex;
+  margin:auto;
+      border: black 1px solid;
+    border-radius: 10px;
+    padding:5px;
+
+}
+
+#itemRight, #itemLeft{
+
+    text-align: center;
+    font-size: 40px;
+    font-weight: bolder;
+
+    vertical-align: middle;
+    display: flex;
+    position: relative;
+    margin: 0px auto;
+        border-radius:5px
+
+}
+#itemRight:hover, #itemLeft:hover{
+  background-color: orange;
+  
+
+}
+#itemRight div, #itemLeft div{
+width: 100%;
+    text-align: center;
+    font-size: 40px;
+    position: relative;
+    font-weight: bolder;
+    height: 100%;
+    top: calc(50% - 40px);
+    padding: 5px;
+
+}
+.chosenImage{
+  min-width:400px;
+  border-radius:10px;
+}
 #bidContainer{
     width:100%;
-    padding:10px;
+    padding-top:10px;
     display:flex;
-    text-align:center;
+    /* text-align:center; */
     animation: openBid .5s both
 }
 
@@ -91,4 +143,44 @@ ul{
     border-radius: 3px;
     text-decoration: none;
     color:black;
+}
+
+.XoutButton{
+  text-align: right;
+    padding: 30px;
+    background-color: lightblue;
+    TOP: 20PX;
+    width: fit-content;
+    position: absolute;
+    right: 20px;
+    border-radius: 5px;
+
+}
+
+.XoutButton:hover{
+  background-color: orange;
+}
+
+#itemStory, #bidDisplay, #openBid, #bidContainer, #bidForm, #openComments, .itemCommentsContainer {
+width:60%;
+margin:auto;
+
+} 
+#openComments, #openBid{
+  background:lightblue;
+  border-radius:5px;
+  padding:5px;
+  margin-top:5px;
+}
+#openComments:hover, #openBid:hover{
+  background-color:orange;
+}
+
+
+.itemCommentsContainer {
+  margin-top:5px;
+  border:1px black solid;
+  border-radius:12px;
+  padding:5px;
+
 }
