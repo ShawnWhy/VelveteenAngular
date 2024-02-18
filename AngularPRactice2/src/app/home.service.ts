@@ -243,7 +243,7 @@ export class HomeService {
     let newItem: any = {
       userId: this.currentUser.value.id,
       name: item.name,
-      itemStory: item.itemStory,
+      itemStory: item.story,
       url1: item.url1,
       url2: item.url2,
       url3: item.url3,

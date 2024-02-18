@@ -102,30 +102,27 @@ export class CommunityComponent {
 
   public itemPositions: any = { x: 12, y: 200 };
 
+  public backgroundColor:string = "pink"
   public userItemColors: any[] = [
     'orange',
     'orange',
     'orange',
     'orange',
+    'orange',    ,
+    'orange',
+    'orange',
+    'orange',
     'orange',
     ,
-    'orange',
+    'orange'
     ,
-    'orange',
+    'orange'
     ,
-    'orange',
+    'orange'
     ,
-    'orange',
+    'orange'
     ,
-    'orange',
-    ,
-    'orange',
-    ,
-    'orange',
-    ,
-    'orange',
-    ,
-    'orange',
+    'orange'
   ];
   public userItemPositions: any[] = [];
 
@@ -234,7 +231,7 @@ export class CommunityComponent {
           for (let i = 0; i < items.length; i++) {
             this.heartClickTrigger.push(false);
             this.heartTop.push(false);
-            this.heartColors.push('orange');
+            this.heartColors.push('pink');
           }
 
           if (this.userItemPositions.length == 0) {

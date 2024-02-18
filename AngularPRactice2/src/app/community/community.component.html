@@ -3,10 +3,11 @@
 </h2>
 
 <ul
+
   (click)="dropCard($event)"
   (mousemove)="moveCard($event)"
   id="myTackBoard"
-  style="display: flex; min-width: 100%; overflow: scroll; height: 250px"
+  style="display: flex; min-width: 100%; overflow: scroll; height: 250px; background-color: {{backgroundColor}}"
 >
   <li
     class="card"
@@ -24,7 +25,6 @@
     }"
     [attr.itemId]="i"
   >
-  {{userItemColors[i]}}
 
         <!-- background-color:userItemColors[i] -->
 
@@ -125,7 +125,9 @@
 </form>
 
 <div id = "colorPickers">
+<input style = "margin-right:20px" type="color" value="backgroundColor" [(ngModel)]="backgroundColor" name = "backgroundColor">
+
   <div  *ngFor="let item of userItems; index as i">
-    <input type="color" value2="userItemColors[i]" [(ngModel)]="userItemColors[i]" name = "color+i">
+    <input type="color" value="userItemColors[i]" [(ngModel)]="userItemColors[i]" name = "color+i">
   </div>
 </div>
