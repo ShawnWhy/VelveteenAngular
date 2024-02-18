@@ -172,7 +172,7 @@ module.exports = function (app) {
     updateOrCreate(
       db.User_decoration,
       { userId: req.body.userId },
-      { userId: req.body.userId, decoration: req.body.decoration, colors: req.body.colors}
+      { userId: req.body.userId, decoration: req.body.decoration, colors: req.body.colors, background:req.body.background}
     ).then(function (result) {
       result.item; // the model
       result.created; // bool, if a new item was created.

@@ -29,6 +29,11 @@ module.exports = function(sequelize, DataTypes) {
       // references: "Item",
       // referencesKey:"id"
     },
+    background: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+
+    },
   });
   return User_decoration;
 }

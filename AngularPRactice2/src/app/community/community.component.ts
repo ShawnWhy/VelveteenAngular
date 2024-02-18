@@ -102,20 +102,20 @@ export class CommunityComponent {
 
   public itemPositions: any = { x: 12, y: 200 };
 
-  public backgroundColor:string = "pink"
+  public backgroundColor:string = "white"
   public userItemColors: any[] = [
     'orange',
     'orange',
     'orange',
     'orange',
-    'orange',    ,
+    'orange',    
     'orange',
     'orange',
     'orange',
     'orange',
-    ,
-    'orange'
-    ,
+    
+    'orange',
+    
     'orange'
     ,
     'orange'
@@ -138,6 +138,7 @@ export class CommunityComponent {
       userId: userId,
       decoration: decoration,
       colors: colors,
+      background: this.backgroundColor
     };
     // console.log('this is the new decoration');
     // console.log(newDecoration);
@@ -194,6 +195,9 @@ export class CommunityComponent {
                 this.userItemColors = tempUserColors.colors;
                 console.log(this.userItemColors);
 
+          }
+          if(decoration.background){
+            this.backgroundColor=decoration.background
           }
       
         }
